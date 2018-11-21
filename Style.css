@@ -1,0 +1,105 @@
+html body{
+   width: 100%;
+   margin: 0;
+   padding: 0;
+   font-family: Arial, sans-serif;
+}
+
+.teams {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.teams td, .teams th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.teams tr:nth-child(even){background-color: #f2f2f2;}
+
+.teams tr:hover {background-color: #ddd;}
+
+.teams th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: rgb(26, 26, 34);
+    color: white;
+}
+
+.select_form{
+    height: 32px;
+    width: 90%;
+    padding: 5px;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: rgb(26, 26, 34);
+}
+
+li {
+    float: left;
+    color: #fff;
+    font-weight: bold;
+    margin: 10px;
+}
+
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 16px;
+    text-decoration: none;
+}
+
+.div_base{
+    position: fixed;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    top: 0;
+    background-color: #fff;
+}
+
+.div_table{
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    margin-top: 207px;
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: 0;    
+}
+
+.container{
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.teams2 {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.teams2 td, .teams2 th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.teams2 tr:nth-child(even){background-color: #f2f2f2;}
+
+.teams2 tr:hover {background-color: #ddd;}
+
+.teams2 th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #608ffc;
+    color: white;
+}
+
