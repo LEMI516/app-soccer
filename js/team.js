@@ -3,7 +3,6 @@ var teamsArray;
 
 $( document ).ready(function() {
     innerSelectSimple('confederationTeam',confederaciones);
-    //innerSelectSimple('typeTeam',typeTeamList);
     SQL_DATA_BASE_UPLOADED();
 });
 
@@ -51,7 +50,7 @@ function readTeams() {
             cursor.continue();
         }else{
             loadParents();
-            searchGeneral('0',[$('#typeTeam').val()]);
+            searchGeneral('0',[$('#txtypeTeam').val()]);
         }
     };
  }
