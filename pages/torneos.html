@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Soccer History</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../css/index.css">
+    <script src="../js/jquery-3.3.1.js" type="text/javascript" ></script>
+    <script src="../js/static.js" type="text/javascript" ></script>
+    <script src="../js/util.js" type="text/javascript" ></script>
+    
+</head>
+<body onload="SQL_DATA_BASE_UPLOADED()">
+    <div class="header"> 
+        <div class="txt_header">Torneos</div>
+        <img src="../img/icon_menu.png" id="img_menu" onclick="onclickMenu(1);"  class="img_menu" >
+        <div id="menu" class="menu" style="display:none">
+            <div onclick="selectContainer('container_1')" >Ver</div>
+            <div onclick="selectContainer('container_2')">Crear</div>
+            <div onclick="location.href='index.html';">Regresar</div>
+        </div>
+    </div>
+    
+</body>
+</html>
