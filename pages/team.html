@@ -34,7 +34,10 @@
     <div id="container_2" name="containers" class="container" style="display: none">
             <div class="div_table" style="padding-top:65px">
                 <select id="confederationTeam" class="combo" onchange="loadParents();"></select>
-                <select id="typeTeam" class="combo" onchange="typeTeam(this.value)"></select>
+                <select id="typeTeam" class="combo" onchange="typeTeam(this.value)">
+                    <option value="CLUB">CLUB</option>
+                    <option value="SEL">SELECCION</option>                    
+                </select>
                 <input type="text" style="text-transform:uppercase" id="name" placeholder="Nombre" class="inp_txt"/>
                 <input type="text" style="text-transform:uppercase" id="abreviatura" class="inp_txt"  placeholder="Abreviatura"/>
                 <select id="parentTeam" class="combo" onchange=""></select>

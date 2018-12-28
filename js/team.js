@@ -3,7 +3,7 @@ var teamsArray;
 
 $( document ).ready(function() {
     innerSelectSimple('confederationTeam',confederaciones);
-    innerSelectSimple('typeTeam',typeTeamList);
+    //innerSelectSimple('typeTeam',typeTeamList);
     SQL_DATA_BASE_UPLOADED();
 });
 
@@ -57,11 +57,14 @@ function readTeams() {
  }
 
  function addTeam(){
-    var elements='confederationTeam|typeTeam|parentTeam|name|abreviatura';
+    var type=$('#typeTeam').val(); 
+    var elements=(type==='CLUB')?'confederationTeam|typeTeam|parentTeam|name|abreviatura':'confederationTeam|typeTeam|name|abreviatura';
     var isValid=isValidValues(elements);
     if(isValid){
         var v=values(elements);
-        var team={ conf:v[0],type:v[1],parent:v[2],name:v[3].toUpperCase(),abre:v[4].toUpperCase() };
+        var team;
+        if(type==='CLUB') team={ conf:v[0],type:v[1],parent:v[2],name:v[3].toUpperCase(),abre:v[4].toUpperCase() };
+        else team={ conf:v[0],type:v[1],parent:v[0],name:v[2].toUpperCase(),abre:v[3].toUpperCase() };
         add("teams",team,'cleanValues()');
     }else{
         Tooltip('Debe ingresar todos los datos');
