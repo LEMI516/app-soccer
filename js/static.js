@@ -20,3 +20,21 @@ function name_torneo(id){
     else if(id=='CMC') name='COPA MUNDIAL DE CLUBES';
     return name;
 }
+
+function name_type_torneo(id){
+    var name='';
+    if(id=='LG') name='LIGA';
+    else if(id=='CE') name='COPA - ELIMINATORIA';
+    else if(id=='CGI') name='COPA - GRUPOS (INI)';
+    else if(id=='CGFP') name='COPA - GRUPOS (FP)';
+    return name;
+}
+
+function name_type_match(id){
+    var name='';
+    if(id=='UNI') name='UNICO';
+    else if(id=='LOCVIS') name='LOCAL - VISITANTE';
+    return name;
+}
+
+

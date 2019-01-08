@@ -186,6 +186,7 @@ html body{
     z-index: 301;
     font-size: 1.2em;
     font-weight: bold;
+
 }
 
 .button_dialog{
@@ -204,4 +205,51 @@ html body{
     margin-top: 5px;
     margin-left: 3px;
     margin-right:3px;
+}
+
+a {
+   text-decoration: none;
+   color: #515050;
+   cursor: pointer; 
+}
+
+.button_form{
+    height: 35px;
+    border-radius: 3px;
+    background-color: #f2f2f2;
+    text-align: center;
+    width: auto;
+    font-weight: bold;
+    color: #515050;
+    font-size: 1.2em;
+    padding-left: 15px;
+    padding-right: 15px;
+    font-family: Arial, sans-serif;
+    border: solid 1px #515050;
+    -webkit-box-shadow: -4px 8px 13px -10px  rgba(0,0,0,0.75);
+    -moz-box-shadow: -4px 8px 13px -10px  rgba(0,0,0,0.75);
+    box-shadow: -4px 8px 13px -10px  rgba(0,0,0,0.75); 
+    margin: 5px;   
+}
+
+.tdialog {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.tdialog td, .tdialog th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.tdialog tr:nth-child(even){background-color: #aab5f3;}
+
+.tdialog tr:hover {background-color: #ddd9d9;}
+
+.tdialog th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: rgb(26, 26, 34);
+    color: white;
 }

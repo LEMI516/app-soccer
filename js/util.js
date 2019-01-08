@@ -6,6 +6,10 @@ function Itms(name){
     return document.getElementsByName(name);
 }
 
+function ItmV(id){
+    return document.getElementById(id).value.trim();
+}
+
 function innerSelect(id,array){
     var html='';
     for(var i=0;i<array.length;i++){
@@ -78,6 +82,12 @@ function dialog_confirm(msj,funsi){
     $('#dialog').show();
 }
 
+function dialog(idContainer){
+    var html=Itm(idContainer).innerHTML;
+    $('#dialog').html(html);
+    $('#dialog').show();
+}
+
 function close_dialog_confirm(){
     $('#dialog').hide();
 }
@@ -101,4 +111,57 @@ function onclickMenu(state){
         $('#menu').hide();
         Itm("img_menu").setAttribute("onclick","onclickMenu(1)");
     }
+}
+
+function depureArray(list){
+    var newArray=new Array();
+    for(i in list){
+        var l=list[i];
+        var existe=false;
+        for(j in newArray){
+            var n=newArray[j];
+            if(parseInt(l.id)===parseInt(n.id)){
+                existe=true;
+                break;
+            }
+        } 
+        if(!existe){
+            newArray.push(l);
+        }       
+    }
+    return newArray;
+}
+
+function getParameterByName(name) {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+    results = regex.exec(location.search);
+    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
+
+function findById(list,id){
+    for(i in list){
+        var l=list[i];
+        if(parseInt(l.id)===parseInt(id))
+            return l;
+    }
+    return null;
+}
+
+function groupShow(ids){
+    var elements=ids.split('|');
+    for(var i=0;i<elements.length;i++){
+        $('#'+elements[i]).show();
+    }
+}
+
+function groupHide(ids){
+    var elements=ids.split('|');
+    for(var i=0;i<elements.length;i++){
+        $('#'+elements[i]).hide();
+    }
+}
+
+function inyHtml(id,html){
+   Itm(id).innerHTML=html;
 }

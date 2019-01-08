@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Soccer History</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../css/index.css">
+    <script src="../js/jquery-3.3.1.js" type="text/javascript" ></script>
+    <script src="../js/static.js" type="text/javascript" ></script>
+    <script src="../js/util.js" type="text/javascript" ></script>
+    <script src="../js/plantillas.js" type="text/javascript" ></script>
+    
+</head>
+<body onload="SQL_DATA_BASE_UPLOADED()">
+    <div class="header"> 
+        <div class="txt_header">Plantillas</div>
+        <img src="../img/icon_menu.png" id="img_menu" onclick="onclickMenu(1);"  class="img_menu" >
+        <div id="menu" class="menu" style="display:none">
+            <div onclick="selectContainer('container_1')" >Ver</div>
+            <div onclick="selectContainer('container_2')">Crear</div>
+            <div onclick="location.href='../index.html';">Regresar</div>
+        </div>
+    </div>
+    <div id="container_1" name="containers" class="container">
+        <div class="div_table" style="padding-top:65px" >
+            <table id="torneos" class="teams"></table>
+        </div>                
+    </div>
+    <div id="container_2" name="containers" class="container" style="display: none">
+        <div class="div_table" style="padding-top:65px">
+            <select  id="confederation" class="combo" >
+                <option value="">CONFEDERACION...</option>
+                <option value="UEFA">UEFA</option>
+                <option value="CONMEBOL">CONMEBOL</option>
+                <option value="CONCACAF">CONCACAF</option>
+                <option value="CAF">CAF</option>
+                <option value="AFC">AFC</option>
+                <option value="OFC">OFC</option>  
+                <option value="MUN">MUNDIAL</option>               
+            </select>
+            <select id="typeTeam" class="combo" >
+                    <option value="">EQUIPOS...</option>
+                    <option value="CLUB">CLUB</option>
+                    <option value="SEL">SELECCION</option>                    
+            </select>   
+            <select id="typeTorneo" class="combo" onchange="onchangeCreatePlantillas()" >
+                    <option value="">TIPO...</option>
+                    <option value="LG">LIGA</option>
+                    <option value="CE">COPA - ELIMINATORIA</option>
+                    <option value="CGI">COPA - GRUPO (INI)</option>
+                    <option value="CGFP">COPA - GRUPO (FP)</option>                    
+            </select> 
+            <select id="typeMatch" class="combo" >
+                    <option value="">PARTIDOS...</option>
+                    <option value="UNI">UNICO</option>
+                    <option value="LOCVIS">LOCAL - VISITANTE</option>                    
+            </select>                                 
+            <input type="number" style="text-transform:uppercase;" id="cantTeam" class="inp_txt"  placeholder="N° EQUIPOS"/>
+            <input type="number" style="text-transform:uppercase;display: none" id="cantGru" class="inp_txt"  placeholder="N° GRUPOS"/>
+            <input type="number" style="text-transform:uppercase;display: none" id="cantTeamxGru" class="inp_txt"  placeholder="N° EQUIPOSxGRUPO"/>
+            <input type="number" style="text-transform:uppercase;display: none" id="cantClaxGru" class="inp_txt"  placeholder="N° CLASIxGRUPO"/>
+            <input type="text" style="text-transform:uppercase;" id="namePlanti" class="inp_txt"  placeholder="IDENTIFICADOR"/>
+            <input type="number" style="text-transform:uppercase;display: none" id="cantMejTerceros" class="inp_txt"  placeholder="N° MEJ.TERC"/>
+            <button class="button_form" id="btnCfp" data-value="" style="display: none" onclick="dialog('dialog_configurar_ff');ConfigurarFases(this.id)" >CONFIGURAR FP</button>
+            <button class="button_form" id="btnCff" data-value="" style="display: none" onclick="dialog('dialog_configurar_ff');ConfigurarFases(this.id)" >CONFIGURAR FF</button>
+            <div class="div_btn" ><button class="button" onclick="addPlantilla()" >AGREGAR</button></div>
+        </div>
+    </div>
+    <div id="dialog" align="center" class="dialog" style="display:none" ></div>
+    <div id='foter'></div> 
+    <!--DIALOG CONFIGURAR FF-->   
+    <div id="dialog_configurar_ff" style="display:none;">
+        <div style="background-color:white;border-radius: 5px;color:#515050" >
+            <label id="idFase" >Fase #</label><br>
+            <label id="description"></label>
+            <input type="number" style="text-transform:uppercase" id="fase" class="inp_txt"  placeholder="N° EQUIPOS"/>
+            <button class="button_dialog" onclick="addFase()" >GUARDAR</button>
+            <button class="button_dialog" onclick="close_dialog_confirm()" >CANCELAR</button> 
+        </div>
+    </div>
+    <div id="dialog_show_plantilla" style="display:none;">
+        <div style="background-color:white;border-radius: 5px;color:#515050" >
+               <div id="container_show_plantilla" style="font-size: 0.7em;background-color:white;color:#515050;width: 98%" ></div>
+               <button class="button_dialog" onclick="close_dialog_confirm()" >SALIR</button> 
+        </div>
+    </div>
+</body>
+</html>
