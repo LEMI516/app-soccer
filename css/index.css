@@ -309,3 +309,25 @@ a {
     overflow: auto;
     height: 300px;
  }
+
+ .table {
+    border-collapse: collapse;
+    width: 100%;
+    text-align: left;
+    font-weight: normal;
+}
+
+.table td, .table th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.table tr:hover {background-color: #ddd;}
+
+.table th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: rgb(26, 26, 34);
+    color: white;
+}

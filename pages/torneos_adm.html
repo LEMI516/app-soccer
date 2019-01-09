@@ -5,6 +5,7 @@
     <title>Soccer History</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/torneos.css">
     <script src="../js/jquery-3.3.1.js" type="text/javascript" ></script>
     <script src="../js/static.js" type="text/javascript" ></script>
     <script src="../js/util.js" type="text/javascript" ></script>
@@ -16,8 +17,7 @@
         <div class="txt_header" id="txt_header">Administrar Torneo</div>
         <img src="../img/icon_menu.png" id="img_menu" onclick="onclickMenu(1);"  class="img_menu" >
         <div id="menu" class="menu" style="display:none">
-            <div onclick="selectContainer('container_1')" >Ver</div>
-            <div onclick="selectContainer('container_2')">Configurar</div>
+            <div onclick="dialog('dialog_buil_fase')">Configurar Fase</div>
             <div onclick="location.href='torneos.html';">Regresar</div>
         </div>
     </div>
@@ -32,8 +32,7 @@
         </div>
     </div>
     <div id="divFix" name="tab_containers" class="container" style="display:none">
-        <div class="div_table" style="padding-top:105px">
-                 
+        <div id="divFixChild" class="div_table" style="padding-top:105px">
         </div>
     </div>
     <!--DIALOG ADD TEAM-->   
@@ -46,10 +45,22 @@
                 </select>
                 <select id="parent" class="combo" onchange="serachTeams(1)" >
                 </select>                                
-                <input type="text" style="text-transform:uppercase" id="txtBuscar" class="inp_txt"  placeholder="BUSCAR..."/>
                 <div class="search" ><table id="teamsSearch" class="tdialog"></table></div>
                 <button class="button_dialog" onclick="close_dialog_confirm()" >SALIR</button>
             </div>
-        </div>        
+        </div> 
+    <!--DIALOG FASE-->   
+    <div id="dialog_buil_fase" style="display:none;">
+        <div style="background-color:white;border-radius: 5px;color:#515050" >
+            <label >CONSTRUIR FASE</label><br>
+            <select id="selFases" class="combo" onchange="iniFase()" ></select>
+            <label >EQUIPOS</label><br>
+            <div class="search" style="height: 150px;" ><table id="tableTeamsforFase" class="tdialog"></table></div>
+            <br><label >EQUIPOS EN FASE</label><br>
+            <div class="search" style="height: 150px;" ><table id="teamsTemasFase" class="table"></table></div>            
+            <button class="button_dialog" onclick="createFixture()" >GUARDAR</button>
+            <button class="button_dialog" onclick="close_dialog_confirm()" >SALIR</button>
+        </div>
+    </div>               
 </body>
 </html>

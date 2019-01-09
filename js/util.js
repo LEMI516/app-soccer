@@ -90,6 +90,7 @@ function dialog(idContainer){
     var html=Itm(idContainer).innerHTML;
     $('#dialog').html(html);
     $('#dialog').show();
+    onclickMenu(0);
 }
 
 function close_dialog_confirm(){
@@ -224,4 +225,36 @@ function findTeamByAbre(abre,list){
         }
     }
     return null;
+}
+
+function findEntityBy(id,list){
+    for(i in list){
+        var t=list[i];
+        if(t.id==id){
+            return t;
+        }
+    }
+    return null;
+}
+
+function findTeamsforFase(pos,list){
+    var newArray=new Array();
+    for(i in list){
+        var t=list[i];
+        if(parseInt(t.pos)===parseInt(pos)){
+            newArray.push(t);
+        }
+    }
+    return newArray;
+}
+
+function findCompetenciFixtureByIdFase(idfase,list){
+    var newArray=new Array();
+    for(i in list){
+        var t=list[i];
+        if(t.idfase===idfase){
+            newArray.push(t);
+        }
+    }
+    return newArray;
 }

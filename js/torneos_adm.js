@@ -2,6 +2,8 @@ var db;
 var torneo;
 var teamsArray;
 var teamsCompetenciaArray;
+var fasesArray;
+var groupSelected=-1;
 
 $( document ).ready(function() {
     tabs(['EQUIPOS','FIXTURE'],['divEqui','divFix']);
@@ -57,7 +59,6 @@ function readTeams() {
  }
 
  function serachTeams(caso){
-    var txt=ItmV('txtBuscar');
     var txtypeTeam=ItmV('txtypeTeam'); 
     var parent=ItmV('parent');
     var html='';
@@ -69,7 +70,7 @@ function readTeams() {
             }
         }else if(caso===2){
             if(t.type===txtypeTeam && t.parent===torneo.plantilla.confederation){
-                html+='<tr><td>'+t.name+'</td></tr>';
+                html+='<tr><td>'+t.name+' '+icon_add('agregar_equipo(\''+t.abre+'\')')+'</td></tr>';
             }
         }
 
@@ -80,7 +81,7 @@ function readTeams() {
 function agregar_equipo(abre){
     if(isValidTeamAdd(abre)){
         var nameobjectStore='competencia_team';
-        var comp_team={id_comp:torneo.id,team:abre};
+        var comp_team={id_comp:torneo.id,team:abre,fasep:0};
         var request = db.transaction([nameobjectStore], "readwrite").objectStore(nameobjectStore).add(comp_team);
         request.onsuccess = function(event) {
             readCompetenciaTeam();
@@ -109,11 +110,12 @@ function readCompetenciaTeam() {
         var cursor = event.target.result;
         if (cursor) {
             var team=findTeamByAbre(cursor.value.team,teamsArray);
-            var teamComp={id:cursor.value.id,team:team};
+            var teamComp={id:cursor.value.id,team:team,pos:cursor.value.fasep};
             teamsCompetenciaArray.push(teamComp);
             cursor.continue();
         }else{
             onloadTeamsCompetencia();
+            buildFixture();
         }
     };
  }
@@ -127,7 +129,7 @@ function readCompetenciaTeam() {
     for(i in teamsCompetenciaArray){
         var x=teamsCompetenciaArray[i];
         var t=x.team;
-        html+='<tr><td>'+t.name+'<b>('+t.parent+')</b> '+icon_elim('dialogEliminarTeam('+x.id+',\''+t.name+'\')')+'</td></tr>';  
+        html+='<tr><td>'+(parseInt(i)+1)+'.'+t.name+'<b>('+t.parent+')</b> '+icon_elim('dialogEliminarTeam('+x.id+',\''+t.name+'\')')+'</td></tr>';  
     }    
     $('#teams').html(html); 
 }
@@ -150,3 +152,83 @@ function deleteTeam(nameobjectStore,id,name_funcion){
         Tooltip('Ocurrio un error en la base de datos');
     }
 }
+
+function buildFixture(){
+    var html='',html2='';
+    fasesArray=new Array();
+    if(torneo.plantilla.typeTorneo=='CGI'){
+        var f=torneo.plantilla.cff.split(':');
+        html+='<div class="fases" >FASE GRUPOS</div>';
+        html2+=innerOption('','FASE...');
+        html2+=innerOption('FG','FASE GRUPOS');
+        fasesArray.push({id:'FG',pos:0,name:'FASE GRUPOS',n:torneo.plantilla.cantTeamxGru,n2:torneo.plantilla.cantGru});
+        for(i in f){
+            var id=parseInt(i)+1;
+            html+='<div class="fases" >FASE #'+(id)+'</div>';
+            html2+=innerOption('F'+id,'FASE '+id);
+            fasesArray.push({id:'F'+id,pos:id,name:'FASE '+id,n:f[i],n2:0});
+        }
+    }
+    inyHtml('divFixChild',html);
+    inyHtml('selFases',html2);
+}
+
+function iniFase(){
+    var idfase=ItmV('selFases');
+    if(idfase!=undefined && idfase!=''){
+        var fase=findEntityBy(idfase,fasesArray);
+        if(fase.id=='FG'){
+            var teamsFase=findTeamsforFase(fase.pos,teamsCompetenciaArray);
+            var html='';
+            var i=0;
+            for(i in teamsFase){
+                var x=teamsFase[i];
+                var t=x.team;
+                html+='<tr id="tr_ttff_'+t.abre+'" ><td>'+t.name+'<b>('+t.parent+')</b> '+icon_add('agregar_equipo_fase(\''+t.abre+'\')')+'</td></tr>';  
+            }    
+            $('#tableTeamsforFase').html(html);
+            var html2='';var k=0;
+            for(i=1;i<=parseInt(fase.n2);i++){
+                html2+='<tr id="GP'+i+'" onclick="selectedGroup(this.id)" ><td><b>GRUPO '+i+'</b></td></tr>';  
+            }
+            $('#teamsTemasFase').html(html2);
+        }
+    }
+}
+
+function selectedGroup(id){
+    groupSelected=id;
+}
+
+function agregar_equipo_fase(abre){
+    var t=findTeamByAbre(abre,teamsArray);
+    var idfase=ItmV('selFases');
+    var fase=findEntityBy(idfase,fasesArray);
+    if(fase.id=='FG'){
+        if(groupSelected!=-1){
+            $('#tr_ttff_'+abre).hide();
+            var html='';
+            html='<tr id="tr_tf_'+t.abre+'" name="tr_tfs" data-subfase="'+groupSelected+'" data-value="'+t.abre+'" ><td>'+t.name+'<b>('+t.parent+')</b> '+icon_elim('eliminarTeaminFase(\''+t.abre+'\')')+'</td></tr>';  
+            $(html).insertAfter($("#"+groupSelected));
+        }
+    }
+
+}
+
+function eliminarTeaminFase(abre){
+    $('#tr_tf_'+abre).remove();
+    $('#tr_ttff_'+abre).show();
+}
+
+function createFixture(){
+    var teams=Itms('tr_tfs');
+    var idfase=ItmV('selFases');
+    for(var i=0;i<teams.length;i++){
+        var abre=teams[i].dataset.value;
+        var idsubfase=teams[i].dataset.subfase;
+        var comp_fix={id_comp:torneo.id,team:abre,idfase:idfase,idsubfase:idsubfase};
+        db.transaction(['competencia_fixture'], "readwrite").objectStore('competencia_fixture').add(comp_fix);
+    }
+    $('#teamsTemasFase').html('');
+}
+

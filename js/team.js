@@ -1,5 +1,6 @@
 var db;
 var teamsArray;
+var defaultSelected='';
 
 $( document ).ready(function() {
     innerSelectSimple('confederationTeam',confederaciones);
@@ -32,7 +33,8 @@ function loadParents(){
             html+='<option value="'+t.abre+'" >'+t.name+'</option>';
         }
     }
-    selParent.innerHTML=html;    
+    selParent.innerHTML=html; 
+    selParent.value=defaultSelected;   
 }
 
 function typeTeam(value){
@@ -64,6 +66,7 @@ function readTeams() {
         var team;
         if(type==='CLUB') team={ conf:v[0],type:v[1],parent:v[2],name:v[3].toUpperCase(),abre:v[4].toUpperCase() };
         else team={ conf:v[0],type:v[1],parent:v[0],name:v[2].toUpperCase(),abre:v[3].toUpperCase() };
+        defaultSelected=v[2];
         add("teams",team,'cleanValues()');
     }else{
         Tooltip('Debe ingresar todos los datos');
@@ -101,20 +104,22 @@ function searchGeneral(opc,params){
     var i=0;
     var list=teamsArray;
     var html='';
-    var i=0;
+    var i=0,k=0;
     for(i in list){
         var t=list[i];
         //OPCION 0 - TODOS
         if(opc==='0'){
             if(t.type===params[0] || params[0]==='ALL'){
-                html+='<tr><td>'+t.name+' '+icon_elim('dialogEliminarTeam('+t.id+',\''+t.name+'\')')+'</td></tr>';  
+                html+='<tr><td>'+(k+1)+'.'+t.name+' '+icon_elim('dialogEliminarTeam('+t.id+',\''+t.name+'\')')+'</td></tr>';  
+                k++;
             }
         }        
         //OPCION 1 - BUSCAR POR TEXTO
         else if(opc==='1'){
             var name=t.name.toLowerCase();
             if(name.indexOf(params[0].toLowerCase())>=0 && (t.type===params[1] || params[1]==='ALL')){
-                html+='<tr><td>'+t.name+' '+icon_elim('dialogEliminarTeam('+t.id+',\''+t.name+'\')')+'</td></tr>';  
+                html+='<tr><td>'+(k+1)+'.'+t.name+' '+icon_elim('dialogEliminarTeam('+t.id+',\''+t.name+'\')')+'</td></tr>';  
+                k++;
             }
         }        
     }    
