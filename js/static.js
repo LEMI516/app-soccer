@@ -9,6 +9,10 @@ function icon_edit(fun){
     return '<img class="img_edit" src="../img/icon_edit.png" onclick="'+fun+'" >';
 }
 
+function icon_add(fun){
+    return '<img class="img_elim" src="../img/icon_add.png" onclick="'+fun+'" >';
+}
+
 function name_torneo(id){
     var name='';
     if(id=='LC') name='LIGA COLOMBIANA';

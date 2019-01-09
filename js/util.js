@@ -26,6 +26,10 @@ function innerSelectSimple(id,array){
     $('#'+id).html(html);
 }
 
+function innerOption(id,value){
+    return '<option value="'+id+'" >'+value+'</option>';
+}
+
 function values(elements){
     var array=new Array();
     var elemts=elements.split('|');
@@ -193,4 +197,31 @@ function onclikTabs(pos){
     }
     $(tab).addClass('tab_selected'); 
     $(tabc).show();
+}
+
+function findTeamsBy(param,value,list){
+    var newArray=new Array();
+    for(i in list){
+        var t=list[i];
+        if(param==='conf' && t.conf==value[0]){
+            newArray.push(t);
+        }else if(param==='type' && t.type==value[0]){
+            newArray.push(t);
+        }else if(param==='parent' && t.parent==value[0]){
+            newArray.push(t);
+        }else if(param==='type_conf' && t.type==value[0] && t.conf==value[1]){
+            newArray.push(t);
+        }
+    }
+    return newArray;
+}
+
+function findTeamByAbre(abre,list){
+    for(i in list){
+        var t=list[i];
+        if(t.abre==abre){
+            return t;
+        }
+    }
+    return null;
 }
