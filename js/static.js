@@ -12,7 +12,7 @@ function icon_edit(fun){
 function name_torneo(id){
     var name='';
     if(id=='LC') name='LIGA COLOMBIANA';
-    else if(id=='CL') name='LIGA COLOMBIANA';
+    else if(id=='CL') name='COPA LIBERTADORES';
     else if(id=='UCL') name='CHAMPIONS LEAGUE';
     else if(id=='CS') name='COPA SURAMERICANA';
     else if(id=='UEL') name='EUROPA LEAGUE';

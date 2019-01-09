@@ -15,7 +15,7 @@ function innerSelect(id,array){
     for(var i=0;i<array.length;i++){
         html+='<option value="'+array[i].id+'" >'+array[i].value+'</option>';
     }
-    $('#'+id).inner(html);
+    $('#'+id).html(html);
 }
 
 function innerSelectSimple(id,array){
@@ -164,4 +164,33 @@ function groupHide(ids){
 
 function inyHtml(id,html){
    Itm(id).innerHTML=html;
+}
+
+function tabs(name,ids){
+    var tam=name.length;
+    var width=parseFloat(99/tam);
+    var html='';
+    for(var i=0;i<tam;i++){
+        html+='<div class="tabp_opc" onclick="onclikTabs('+i+')" style="width:'+width+'%" data-container="'+ids[i]+'" ><div name="tabs" class="tab_p '+((i==0)?'tab_selected':'')+'"><div class="tab_c">'+name[i]+'</div></div></div>';
+    }
+    $('#tab').html(html);
+    $('#tab').css({"display": "inline-block"});
+    onclikTabs(0);
+}
+
+function onclikTabs(pos){
+    var tabs=Itms('tabs');
+    var tab,tabc;
+    for(var i=0;i<tabs.length;i++){
+        $(tabs[i]).removeClass('tab_selected');
+        if(i==pos) tab=tabs[i];
+    }
+    var tab_cont=Itms('tab_containers');
+    i=0;
+    for(i in tab_cont){
+        $(tab_cont[i]).hide();
+        if(i==pos) tabc=tab_cont[i];
+    }
+    $(tab).addClass('tab_selected'); 
+    $(tabc).show();
 }

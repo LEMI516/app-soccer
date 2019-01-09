@@ -200,13 +200,6 @@ function deletePlantilla(nameobjectStore,id,name_funcion){
     }
 }
 
-function onclickTorneoAdm(id){
-    var t=findById(torneosArray,id);
-    localStorage.setItem('torneo', JSON.stringify(t));
-    var uri="torneos_adm.html?";
-    location.href=uri; 
-}
-
 function dialog_show_pla(id){
     dialog('dialog_show_plantilla');
     showPlantilla(id);

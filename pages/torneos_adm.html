@@ -21,21 +21,19 @@
             <div onclick="location.href='torneos.html';">Regresar</div>
         </div>
     </div>
-    <div id="container_2" name="containers" class="container" style="display: none">
-        <div class="div_table" style="padding-top:65px">
-            <select id="tipoFase" class="combo" onchange="onchangetipoFase()" >
-                <option value="ELI">ELIMINATORIA</option>
-                <option value="GRU">GRUPO</option>
-            </select>
-            <input type="number" style="text-transform:uppercase" id="nequi" class="inp_txt"  placeholder="N° EQUIPOS"/>
-            <input type="number" style="text-transform:uppercase;display:none" id="ngru" class="inp_txt"  placeholder="N° GRUPOS"/>
-            <input type="number" style="text-transform:uppercase;display:none" id="nequixgru" class="inp_txt"  placeholder="N° EQUXGRU"/>
-            <input type="number" style="text-transform:uppercase;display:none" id="nclasi" class="inp_txt"  placeholder="N° CLFDOS"/>
-            <input type="number" style="text-transform:uppercase;display:none" id="nmjr3" class="inp_txt"  placeholder="N° MJR 3"/>
-            <div class="div_btn" ><button class="button" onclick="addTorneo()" >CREAR</button></div>
+    <div id="tab" class="tabp"></div>
+    <div id="dialog" align="center" class="dialog" style="display:none" ></div>
+    <div id='foter'></div> 
+    
+    <div id="divEqui" name="tab_containers" class="container" style="display:none">
+        <div class="div_table" style="padding-top:105px">
+            <button class="button_form" onclick="dialog('dialog_configurar_ff');" >AGREGAR EQUIPO +</button>   
+        </div>
+    </div>
+    <div id="divFix" name="tab_containers" class="container" style="display:none">
+        <div class="div_table" style="padding-top:105px">
+                 
         </div>
     </div>    
-    <div id="dialog" align="center" class="dialog" style="display:none" ></div>
-    <div id='foter'></div>     
 </body>
 </html>

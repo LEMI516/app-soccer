@@ -2,6 +2,7 @@ var db;
 var torneo;
 
 $( document ).ready(function() {
+    tabs(['EQUIPOS','FIXTURE'],['divEqui','divFix']);
     SQL_DATA_BASE_UPLOADED();
 });
 
