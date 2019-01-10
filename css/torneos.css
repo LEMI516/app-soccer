@@ -1,8 +1,12 @@
 .fases{
-   width: 95%;
+   width: 96%;
    height: 23px;
    padding: 5px;
    background-color: #d4d3d3; 
    border: solid 1px #a6a5a5;
    font-weight: bold;
+}
+
+.tr_class{
+    background-color: #608ffc !important;
 }

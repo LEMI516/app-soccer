@@ -252,9 +252,72 @@ function findCompetenciFixtureByIdFase(idfase,list){
     var newArray=new Array();
     for(i in list){
         var t=list[i];
-        if(t.idfase===idfase){
+        if(t.fix.idfase===idfase){
             newArray.push(t);
         }
     }
     return newArray;
+}
+
+function findCompetenciFixtureByIdFix(id,list){
+    var newArray=new Array();
+    for(i in list){
+        var t=list[i];
+        if(parseInt(t.fix.id)===parseInt(id)){
+            return t;
+        }
+    }
+    return null;
+}
+
+function orderTeamsFixtureByPunGd(listTeams){
+    listTeams.sort(function(a, b) {
+        var fixa = a.fix
+        var fixb = b.fix
+        if (fixa.idsubfase == fixb.idsubfase) {
+            var puna=parseInt(fixa.pun);
+            var gda=parseInt(fixa.gd);
+            var punb=parseInt(fixb.pun);
+            var gdb=parseInt(fixb.gd);            
+            if(puna==punb){
+                if(gda>gdb) return -1;
+                else if (gda<gdb) return 1;
+                else return 0;
+            }else if(puna > punb){
+                return -1;
+            }else{
+                return 1;
+            }
+        }
+    });
+    return  listTeams;
+}
+
+function orderTeamsFixtureByPosPunGd(listTeams){
+    listTeams.sort(function(a, b) {
+        var posa=parseInt(a.pos);
+        var posb=parseInt(b.pos);
+        var fixa = a.c.fix
+        var fixb = b.c.fix
+        var puna=parseInt(fixa.pun);
+        var gda=parseInt(fixa.gd);
+        var punb=parseInt(fixb.pun);
+        var gdb=parseInt(fixb.gd);            
+        if(posa == posb){
+            if(puna==punb){
+                if(gda>gdb) return -1;
+                else if (gda<gdb) return 1;
+                else return 0;
+            }else if(puna > punb){
+                return -1;
+            }else{
+                return 1;
+            }
+        }else{
+            return posa-posb;
+        }
+
+        
+    });
+    return  listTeams;
 }

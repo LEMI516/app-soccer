@@ -126,6 +126,7 @@ html body{
     margin-left: 4%;
     margin-right: 2%; 
     text-align: center;
+    z-index: 1000;
 }
 
 .teams {
@@ -233,6 +234,10 @@ a {
     margin: 5px;   
 }
 
+.button_form:disabled{
+    opacity: 0.3;
+}
+
 .tdialog {
     border-collapse: collapse;
     width: 100%;
@@ -330,4 +335,13 @@ a {
     text-align: left;
     background-color: rgb(26, 26, 34);
     color: white;
+}
+
+.img{
+    width: 7%;
+    height: auto;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    margin-left: 10px;
+    margin-right: 10px;
 }
