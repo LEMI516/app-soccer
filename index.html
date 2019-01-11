@@ -14,11 +14,32 @@
     <div data-role="page" data-theme="a">
         <div data-role="header" >
             <h1>History Soccer</h1>
-            <a href="#left-panel" data-icon="carat-r" data-iconpos="notext" data-shadow="false" data-iconshadow="false" class="ui-nodisc-icon">Open left panel</a>
+            <a href="#nav-panel" data-icon="bars" data-iconpos="notext">Menu</a>
         </div> 
-        <div data-role="panel" id="left-panel" >
-                <p>Left reveal panel.</p>
-                <a href="#" data-rel="close" class="ui-btn ui-corner-all ui-shadow ui-mini ui-btn-inline ui-icon-delete ui-btn-icon-left ui-btn-right">Salir</a>
+        <div data-role="panel" data-position="left" data-position-fixed="false" data-display="reveal" id="nav-panel" data-theme="a" >
+            <ul data-role="listview" data-theme="a" data-divider-theme="a" style="margin-top:-16px;" class="nav-search">
+			    <li data-icon="delete" style="background-color:#111;">
+					<a href="#" data-rel="close">Cerrar</a>
+                </li>
+				<li data-filtertext="wai-aria voiceover accessibility screen reader">
+				    <a href="../about/accessibility.html">Equipos</a>
+                </li>
+				<li data-filtertext="wai-aria voiceover accessibility screen reader">
+                    <a href="../about/accessibility.html">Plantillas</a>
+                </li>    
+				<li data-filtertext="wai-aria voiceover accessibility screen reader">
+                    <a href="../about/accessibility.html">Torneos</a>
+                </li>  
+				<li data-filtertext="wai-aria voiceover accessibility screen reader">
+                    <a href="../about/accessibility.html">Ranking</a>
+                </li> 
+				<li data-filtertext="wai-aria voiceover accessibility screen reader">
+                    <a href="../about/accessibility.html">Historico</a>
+                </li>  
+				<li data-filtertext="wai-aria voiceover accessibility screen reader">
+                    <a href="../about/accessibility.html">Data Import/Export</a>
+                </li>                                                                        
+            </ul>                    
         </div>
     </div>
 </body>
