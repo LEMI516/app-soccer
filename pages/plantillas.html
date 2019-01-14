@@ -16,7 +16,7 @@
 </head>
 <body>
     <div data-role="page" data-theme="a">
-        <div data-role="header" data-fullscreen="true" data-position="fixed" >
+        <div data-role="header" data-transition="none" data-position="fixed" style="position: fixed" >
             <h1>Plantillas</h1>
             <a href="#nav-panel" data-icon="bars" data-iconpos="notext">Menu</a>
         </div> 
@@ -37,10 +37,10 @@
 			</ul>                    
         </div>
         <!-- CONTENIDO-->
-        <div data-role="content" id="container_1" name="containers" style="margin-top: 40px">
+        <div data-role="content" id="container_1" name="containers" >
             <ul id="torneos" data-theme="b" data-role="listview" data-inset="true"></ul>
         </div>
-        <div data-role="content" id="container_2" name="containers" class="container" style="margin-top: 40px;display: none">
+        <div data-role="content" id="container_2" name="containers" class="container" style="display: none">
                 
                     <select  id="confederation" data-theme="b" class="combo" >
                         <option value="">CONFEDERACION...</option>

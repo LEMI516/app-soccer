@@ -102,11 +102,16 @@ function add(nameobjectStore,objectStore,name_funcion) {
         if(opc==='0'){
             var pk=parseInt(t.id);
             if(t.torneo===type || type==='ALL'){
-                html+='<tr><td><a onclick="onclickTorneoAdm('+pk+')" >'+t.name+' '+t.edicion+'°</a> '+icon_elim('dialogEliminarTorneo('+t.id+',\''+t.name+'\')')+'</td></tr>';  
+                html+='<li >'
+                        +'<a onclick="onclickTorneoAdm('+pk+')" href="#">'+t.name+' '+t.edicion+'°</a>'
+                        +'<a data-icon="delete" onclick="dialogEliminarTorneo('+t.id+',\''+t.name+'\')" href="#"></a>'
+                      +'</li>';                 
+                //html+='<tr><td><a onclick="onclickTorneoAdm('+pk+')" >'+t.name+' '+t.edicion+'°</a> '+icon_elim('dialogEliminarTorneo('+t.id+',\''+t.name+'\')')+'</td></tr>';  
             }
         }        
     }    
     $('#torneos').html(html); 
+    $("#torneos").listview('refresh');
 }
 
 function dialogEliminarTorneo(id,name){

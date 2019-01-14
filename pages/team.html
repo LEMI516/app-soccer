@@ -16,7 +16,7 @@
 </head>
 <body>
     <div data-role="page" data-theme="a">
-        <div data-role="header" data-fullscreen="true" data-position="fixed" >
+        <div data-role="header" data-transition="none" data-position="fixed" style="position: fixed" >
             <h1>Equipos</h1>
             <a href="#nav-panel" data-icon="bars" data-iconpos="notext">Menu</a>
         </div> 
@@ -36,7 +36,7 @@
                 </li>  
 			</ul>                    
         </div>
-        <div data-role="content" id="container_1" name="containers" style="margin-top: 40px">
+        <div data-role="content" id="container_1" name="containers" >
             <select id="txtypeTeam" data-theme="b"  class="combo" onchange="changeTypeTeams()" >
                 <option value="ALL">TODOS</option>
                 <option value="CLUB">CLUB</option>
@@ -45,7 +45,7 @@
             <input type="text" onkeyup="searchTeams();" style="text-transform:uppercase" id="search_teams" placeholder="Buscar" class="inp_txt"/>                 
             <ul id="teams" data-theme="b" data-role="listview" data-inset="true"></ul>    
         </div>
-        <div id="container_2" data-role="content" data-theme="a" name="containers" style="margin-top: 40px;display: none">
+        <div id="container_2" data-role="content" data-theme="a" name="containers" style="display: none">
                 <label><b>CREAR</b></label>
                 <select id="confederationTeam" data-theme="b" class="combo" onchange="loadParents();"></select>
                 <select id="typeTeam" class="combo" data-theme="b" onchange="typeTeam(this.value)">

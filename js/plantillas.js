@@ -55,7 +55,7 @@ function ConfigurarFases(idBtn){
         lbl.innerHTML='Fase #'+(f.length+1);
         var htm='';        
         for(var i=0;i<f.length;i++){
-            htm+='Fase '+(i+1)+' -->'+f[i]+' <br>';
+            htm+='Fase '+(i+1)+': '+f[i]+' Equipos <br>';
         }
         des.innerHTML=htm;
     }
