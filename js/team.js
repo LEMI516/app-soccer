@@ -110,7 +110,10 @@ function searchGeneral(opc,params){
         //OPCION 0 - TODOS
         if(opc==='0'){
             if(t.type===params[0] || params[0]==='ALL'){
-                html+='<tr><td>'+(k+1)+'.'+t.name+' '+icon_elim('dialogEliminarTeam('+t.id+',\''+t.name+'\')')+'</td></tr>';  
+                html+='<li >'
+                        +'<a href="#"><h2>'+(k+1)+'.'+t.name+'</h2><p>'+t.abre+' - '+t.parent+'</p></a>'
+                        +'<a data-icon="delete" onclick="dialogEliminarTeam('+t.id+',\''+t.name+'\')" href="#"></a>'
+                      +'</li>';
                 k++;
             }
         }        
@@ -118,12 +121,16 @@ function searchGeneral(opc,params){
         else if(opc==='1'){
             var name=t.name.toLowerCase();
             if(name.indexOf(params[0].toLowerCase())>=0 && (t.type===params[1] || params[1]==='ALL')){
-                html+='<tr><td>'+(k+1)+'.'+t.name+' '+icon_elim('dialogEliminarTeam('+t.id+',\''+t.name+'\')')+'</td></tr>';  
+                html+='<li >'
+                        +'<a href="#"><h2>'+(k+1)+'.'+t.name+'</h2><p>'+t.abre+' - '+t.parent+'</p></a>'
+                        +'<a data-icon="delete" onclick="dialogEliminarTeam('+t.id+',\''+t.name+'\')" href="#"></a>'
+                      +'</li>';                
                 k++;
             }
         }        
     }    
     $('#teams').html(html); 
+    $("#teams").listview('refresh');
 }
 
 function changeTypeTeams(){
@@ -136,7 +143,7 @@ function dialogEliminarTeam(id,name){
 }
 
 function eliminarTeam(id){
-    deleteTeam('teams',id,'searchTeams();close_dialog_confirm()');
+    deleteTeam('teams',id,'searchTeams();');
 }
 
 function deleteTeam(nameobjectStore,id,name_funcion){

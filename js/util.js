@@ -53,14 +53,11 @@ function isValidValues(elements){
 }
 
 function Tooltip(msj){
-    Itm('foter').innerHTML='<div id="msg" class="msg_tool" >'+msj+'</div>';
-    setTimeout("OcultarTooltip()", 2000);
+    $.mobile.toast({
+        message: msj
+    });
 }
   
-function OcultarTooltip(){
-    Itm('foter').innerHTML='';
-}
-
 function selectContainer(id){
     var containers=Itms('containers');
     for(var i=0;i<containers.length;i++){
@@ -78,44 +75,17 @@ function cleanFields(elements){
 }
 
 function dialog_confirm(msj,funsi){
-    var html='<div>'+msj+'<br>'
-    +'<button class="button_dialog" onclick="'+funsi+'">Si</button>'
-    +'<button class="button_dialog" onclick="close_dialog_confirm()">No</button>'
-    +'</div>';
-    $('#dialog').html(html);
-    $('#dialog').show();
+    Itm('popupDialogConfirmMsj').innerHTML=msj;
+    Itm('popupDialogConfirBtnFunsi').setAttribute('onclick',funsi);
+    $( "#popupDialogConfirm" ).popup("open");
 }
 
 function dialog(idContainer){
-    var html=Itm(idContainer).innerHTML;
-    $('#dialog').html(html);
-    $('#dialog').show();
-    onclickMenu(0);
+    $( "#"+idContainer ).popup("open");
 }
-
-function close_dialog_confirm(){
-    $('#dialog').hide();
-}
-
-$(document).on("click",function(e) {
-                    
-    var container = $("#menu");
-    var img = $("#img_menu");
-                       
-    if (!container.is(e.target) && !img.is(e.target) && container.has(e.target).length === 0) { 
-        onclickMenu(0);
-    }
-});
 
 function onclickMenu(state){
-    var element=Itm('menu');
-    if(state===1){
-        $('#menu').show();
-        Itm("img_menu").setAttribute("onclick","onclickMenu(0)");
-    }else{
-        $('#menu').hide();
-        Itm("img_menu").setAttribute("onclick","onclickMenu(1)");
-    }
+    Itm('mnu_closed').click();
 }
 
 function depureArray(list){

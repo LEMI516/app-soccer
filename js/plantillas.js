@@ -68,13 +68,11 @@ function addFase(){
     if(valor==undefined) valor='';
     if(nequi=='0'){
         Itm(idBtnDialogFase).dataset.value='';
-        close_dialog_confirm();
         return;
     }
     if(nequi!=''){
         valor=(valor!='')? valor+':'+nequi:nequi;
         btn.dataset.value=valor;
-        close_dialog_confirm();
     }    
 
 }
@@ -173,11 +171,14 @@ function add(nameobjectStore,objectStore,name_funcion) {
             var c=t;
             var pk=parseInt(c.id);
             var fun="onclickTorneoAdm("+pk+")";
-            html+='<tr><td><a onclick="dialog_show_pla('+pk+')" >'+c.name+'</a>  '+icon_elim('dialogEliminarPlantilla('+c.id+',\''+c.name+'\')')+'</td></tr>';  
-          
+            html+='<li >'
+                    +'<a onclick="dialog_show_pla('+pk+')" href="#">'+c.name+'</a>'
+                    +'<a data-icon="delete" onclick="dialogEliminarPlantilla('+c.id+',\''+c.name+'\')" href="#"></a>'
+                +'</li>';            
         }        
     }    
     $('#torneos').html(html); 
+    $("#torneos").listview('refresh');    
 }
 
 function dialogEliminarPlantilla(id,name){
@@ -185,7 +186,7 @@ function dialogEliminarPlantilla(id,name){
 }
 
 function eliminarPlantilla(id){
-    deletePlantilla('plantilla',id,'close_dialog_confirm()');
+    deletePlantilla('plantilla',id,'');
 }
 
 function deletePlantilla(nameobjectStore,id,name_funcion){
@@ -201,8 +202,8 @@ function deletePlantilla(nameobjectStore,id,name_funcion){
 }
 
 function dialog_show_pla(id){
-    dialog('dialog_show_plantilla');
     showPlantilla(id);
+    dialog('dialog_show_plantilla');
 }
 
 function showPlantilla(id){
