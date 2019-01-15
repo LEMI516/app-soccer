@@ -101,12 +101,11 @@ function add(nameobjectStore,objectStore,name_funcion) {
         //OPCION 0 - TODOS
         if(opc==='0'){
             var pk=parseInt(t.id);
-            if(t.torneo===type || type==='ALL'){
+            if(t.competencia===type || type==='ALL'){
                 html+='<li >'
                         +'<a onclick="onclickTorneoAdm('+pk+')" href="#">'+t.name+' '+t.edicion+'°</a>'
                         +'<a data-icon="delete" onclick="dialogEliminarTorneo('+t.id+',\''+t.name+'\')" href="#"></a>'
                       +'</li>';                 
-                //html+='<tr><td><a onclick="onclickTorneoAdm('+pk+')" >'+t.name+' '+t.edicion+'°</a> '+icon_elim('dialogEliminarTorneo('+t.id+',\''+t.name+'\')')+'</td></tr>';  
             }
         }        
     }    
@@ -119,7 +118,7 @@ function dialogEliminarTorneo(id,name){
 }
 
 function eliminarTorneo(id){
-    deleteTorneo('competencia',id,'close_dialog_confirm()');
+    deleteTorneo('competencia',id,'');
 }
 
 function deleteTorneo(nameobjectStore,id,name_funcion){
@@ -137,6 +136,6 @@ function deleteTorneo(nameobjectStore,id,name_funcion){
 function onclickTorneoAdm(id){
     var t=findById(torneosArray,id);
     localStorage.setItem('torneo', JSON.stringify(t));
-    var uri="torneos_adm.html?";
+    var uri="torneo_adm.html?";
     location.href=uri; 
 }

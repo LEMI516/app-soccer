@@ -16,7 +16,7 @@ $( document ).ready(function() {
 function SQL_DATA_BASE_UPLOADED(){
     var request = window.indexedDB.open("SoccerDataBase", 2);
     torneo=JSON.parse(localStorage.getItem('torneo'));
-    $('#txt_header').html(torneo.name+" "+torneo.edicion); 
+    $('#h1PageTorneoAdmon').html(torneo.competencia+" "+torneo.edicion); 
 
     request.onerror = function(event) {
         console.log("error: ");
@@ -69,16 +69,21 @@ function readTeams() {
         var t=teamsArray[i];
         if(caso===1){
             if(t.type===txtypeTeam && t.parent===parent){
-                html+='<tr><td>'+t.name+' '+icon_add('agregar_equipo(\''+t.abre+'\')')+'</td></tr>';
+                html+='<li >'
+                        +'<a data-icon="plus" onclick="agregar_equipo(\''+t.abre+'\')" href="#">'+t.name+'</a>'
+                    +'</li>';                 
             }
         }else if(caso===2){
             if(t.type===txtypeTeam && t.parent===torneo.plantilla.confederation){
-                html+='<tr><td>'+t.name+' '+icon_add('agregar_equipo(\''+t.abre+'\')')+'</td></tr>';
+                html+='<li >'
+                        +'<a data-icon="plus" onclick="agregar_equipo(\''+t.abre+'\')" href="#">'+t.name+'</a>'
+                    +'</li>'; 
             }
         }
 
     }
     inyHtml('teamsSearch',html);
+    $("#teamsSearch").listview('refresh');
 }
 
 function agregar_equipo(abre){
@@ -133,9 +138,13 @@ function readCompetenciaTeam() {
     for(i in teamsCompetenciaArray){
         var x=teamsCompetenciaArray[i];
         var t=x.team;
-        html+='<tr><td>'+(parseInt(i)+1)+'.'+t.name+'<b>('+t.parent+')</b> '+icon_elim('dialogEliminarTeam('+x.id+',\''+t.name+'\')')+'</td></tr>';  
+        html+='<li >'
+            +'<a href="#">'+(parseInt(i)+1)+'.'+t.name+'<b>('+t.parent+')</b></a>'
+            +'<a data-icon="delete" onclick="dialogEliminarTeam('+x.id+',\''+t.name+'\')" href="#"></a>'
+        +'</li>';        
     }    
     $('#teams').html(html); 
+    $("#teams").listview('refresh');
 }
 
 function dialogEliminarTeam(id,name){

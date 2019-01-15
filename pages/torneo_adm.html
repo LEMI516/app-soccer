@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Soccer History</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../jquerym/ThemeAppSoccer.css" />
+    <link rel="stylesheet" href="../jquerym/jquery.mobile.icons.min.css" /> 
+    <link rel="stylesheet" href="../jquerym/jquery.mobile.structure-1.4.5.min.css" />
+    <link rel="stylesheet" href="../css/torneos.css">
+    <script src="../jquerym/jquery-1.11.1.min.js"></script>
+    <script src="../jquerym/jquery.mobile-1.4.5.min.js"></script>
+    <script src="../jquerym/jquery-mobile-toast.js"></script>
+    <script src="../js/static.js" type="text/javascript" ></script>
+    <script src="../js/util.js" type="text/javascript" ></script>
+    <script src="../js/torneos_adm.js" type="text/javascript" ></script>
+    
+</head>
+<body >
+    <div data-role="page" data-theme="a">
+        <div data-role="header" data-transition="none" data-position="fixed" style="position: fixed" >
+            <h1 id="h1PageTorneoAdmon">Administrar Torneo</h1>
+            <a href="#nav-panel" data-icon="bars" data-iconpos="notext">Menu</a>
+        </div> 
+        <div data-role="panel" data-position="left" data-position-fixed="false" data-display="reveal" id="nav-panel" data-theme="a" >
+            <ul data-role="listview" data-theme="a" data-divider-theme="a" style="margin-top:-16px;" class="nav-search">
+                <li data-icon="delete" style="background-color:#111;">
+                    <a id="mnu_closed" href="#" data-rel="close">Cerrar</a>
+                </li>
+                <li data-filtertext="wai-aria voiceover accessibility screen reader">
+                    <a onclick="location.href='torneos.html'" >Regresar</a>
+                </li>  
+            </ul>                    
+        </div>
+        <div data-role="tabs" style="padding: 0">
+            <div data-role="navbar" data-iconpos="top">
+                <ul>
+                    <li><a href="#fragment-1"  data-icon="home" class="ui-btn-active">Equipos</a></li>
+                    <li><a href="#fragment-2" data-icon="grid">Fixture</a></li>
+                    <li><a href="#fragment-3" data-icon="gear">Configuración</a></li>
+                </ul>
+            </div>
+            <div id="fragment-1">
+                <button onclick="dialog('dialog_agregar_equipo');" >AGREGAR EQUIPO +</button>  
+                <ul id="teams" data-theme="b" data-role="listview" data-inset="true"></ul> 
+            </div>
+            <div id="fragment-2">
+                <div id="divFixChild" ></div>
+            </div>
+            <div id="fragment-3">
+                <label >CONSTRUIR FASE</label><br>
+                <select id="selFases" class="combo" onchange="iniFase()" ></select>
+                <button class="button_form" id="btnNextFase" disabled onclick="nextFase()" >SIGUIENTE FASE</button><br>
+                <label >EQUIPOS</label><br>
+                <div class="search" style="height: 150px;" ><table id="tableTeamsforFase" class="tdialog"></table></div>
+                <br><label >EQUIPOS EN FASE</label><img class="img" src="../img/icon_load.png" onclick="organizeFixtureAutmatic()" ><br>
+                <div class="search" style="height: 150px;" ><table id="teamsTemasFase" class="table"></table></div>            
+                <button class="button_dialog" onclick="createFixture()" >GUARDAR</button>
+                <button class="button_dialog" onclick="close_dialog_confirm()" >SALIR</button>
+            </div>
+        </div>
+        <!-- CUSTOMIZADO -->
+        <div data-role="popup" id="popupDialogConfirm" data-overlay-theme="b" data-theme="b" data-dismissible="false" style="max-width:400px;">
+            <div role="main" class="ui-content">
+                <h3 id="popupDialogConfirmMsj" class="ui-title">Are you sure you want to delete this page?</h3>
+                <a href="#" id="popupDialogConfirBtnFunNo" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-rel="back">No</a>
+                <a href="#" id="popupDialogConfirBtnFunsi" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-rel="back" data-transition="flow">Si</a>
+            </div>
+        </div>
+        <!--DIALOG ADD TEAM-->   
+        <div data-role="popup" id="dialog_agregar_equipo" data-overlay-theme="b" data-theme="b" data-dismissible="false" style="max-width:400px;">
+            <div role="main" class="ui-content">
+                <label><b>AGREGAR EQUIPO</b></label><br>
+                <select id="txtypeTeam" class="combo" onchange="onloadAddTeam()" >
+                    <option value="CLUB">CLUB</option>
+                    <option value="SEL">SELECCION</option>
+                </select>
+                <select id="parent" class="combo" onchange="serachTeams(1)" ></select>
+                <div class="search" ><ul id="teamsSearch" data-theme="b" data-role="listview" data-inset="true"></ul></div>                                 
+                <a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-rel="back">Salir</a>
+            </div>
+        </div> 
+        <!--DIALOG ADD PUNTAJE-->   
+        <div data-role="popup" id="dialog_add_puntaje" data-overlay-theme="b" data-theme="b" data-dismissible="false" style="max-width:400px;">
+            <div role="main" class="ui-content">
+                <label ><b>PUNTAJE - GD</b></label><br>
+                <label style="font-weight: bold" id="lblb_equipo_dap" >EQUIPO</label><br>
+                <input type="number" style="text-transform:uppercase" id="pun" class="inp_txt"  placeholder="PUNTAJE"/>
+                <input type="number" style="text-transform:uppercase" id="gd" class="inp_txt"  placeholder="GOLES DFR"/>
+                <button id="btnSaveDialogAddEquipo" onclick="" >GUARDAR</button>
+                <a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-rel="back">Salir</a>
+            </div>
+        </div>        
+    </div>
+</body>
+</html>

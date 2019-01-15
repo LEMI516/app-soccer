@@ -1,5 +1,9 @@
 var db=null;
 
+$( document ).ready(function() {
+    SQL_DATA_BASE_UPLOADED();
+});
+
 function SQL_DATA_BASE_UPLOADED(){
     var request = window.indexedDB.open("SoccerDataBase", 2);
 

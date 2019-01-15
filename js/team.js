@@ -38,8 +38,8 @@ function loadParents(){
 }
 
 function typeTeam(value){
-    if(value=='CLUB') $('#parentTeam').show();
-    else  $('#parentTeam').hide();
+    if(value=='CLUB') $('#parentTeam').parent().show();
+    else  $('#parentTeam').parent().hide();
 }
 
 function readTeams() {
