@@ -5,8 +5,9 @@ $( document ).ready(function() {
 });
 
 function SQL_DATA_BASE_UPLOADED(){
+    alert('Iniciar carga');
     var request = window.indexedDB.open("SoccerDataBase", 2);
-
+    alert('Abierta la bd carga'); 
     request.onerror = function(event) {
         console.log("error: ");
     };
@@ -14,7 +15,7 @@ function SQL_DATA_BASE_UPLOADED(){
     request.onsuccess = function(event) {
     db = request.result;
     console.log("success: "+ db);
-        //loadTeamDataBase();
+        alert('exito'); 
     };
 
     request.onupgradeneeded = function(event) {
