@@ -81,9 +81,14 @@ function cleanValues(){
 }
 
 function add(nameobjectStore,objectStore,name_funcion) {
-    alert('voy agregar')
-    var request = db.transaction([nameobjectStore], "readwrite").objectStore(nameobjectStore).add(objectStore);
-    alert('agrego')
+    alert('voy agregar');
+    var request;
+    try {
+        request = db.transaction([nameobjectStore], "readwrite").objectStore(nameobjectStore).add(objectStore);
+    }catch(err) {
+        alert(err);
+    }
+    alert('agrego');
     request.onsuccess = function(event) {
        Tooltip('Operación realizada exitosamente');
        if(name_funcion!= null && name_funcion!= undefined && name_funcion!= '') eval(name_funcion);
