@@ -5,17 +5,14 @@ $( document ).ready(function() {
 });
 
 function SQL_DATA_BASE_UPLOADED(){
-    alert('Iniciar carga');
     var request = window.indexedDB.open("SoccerDataBase", 2);
-    alert('Abierta la bd carga'); 
     request.onerror = function(event) {
         console.log("error: ");
     };
  
     request.onsuccess = function(event) {
-    db = request.result;
-    console.log("success: "+ db);
-        alert('exito'); 
+        db = request.result;
+        console.log("success: "+ db);
     };
 
     request.onupgradeneeded = function(event) {
