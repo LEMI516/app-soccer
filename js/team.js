@@ -130,7 +130,7 @@ function searchGeneral(opc,params){
         }        
     }    
     $('#teams').html(html); 
-    $("#teams").listview('refresh');
+    $("#teams").listview('refresh'); 
 }
 
 function changeTypeTeams(){

@@ -152,7 +152,7 @@ function dialogEliminarTeam(id,name){
 }
 
 function eliminarTeam(id){
-    deleteTeam('competencia_team',id,'close_dialog_confirm();readCompetenciaTeam()');
+    deleteTeam('competencia_team',id,'readCompetenciaTeam()');
 }
 
 function deleteTeam(nameobjectStore,id,name_funcion){

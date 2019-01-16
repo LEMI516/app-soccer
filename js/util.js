@@ -52,6 +52,16 @@ function isValidValues(elements){
     return true;
 }
 
+function isValidValuesElements(elemts){
+    for(var i=0;i<elemts.length;i++){
+        var ele=elemts[i];
+        if(ele===undefined || ele==null || ele==''){
+            return false;
+        }
+    }
+    return true;
+}
+
 function Tooltip(msj){
     $.mobile.toast({
         message: msj
@@ -290,4 +300,12 @@ function orderTeamsFixtureByPosPunGd(listTeams){
         
     });
     return  listTeams;
+}
+
+function close_dialog(){
+    var btns=Itms('btnClosedDialogApp');
+    for(var i=0;i<btns.length;i++){
+        btns[i].click();
+        break;
+    }
 }
