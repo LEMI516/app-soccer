@@ -8,7 +8,7 @@ $( document ).ready(function() {
 });
 
 function SQL_DATA_BASE_UPLOADED(){
-    var request = window.indexedDB.open("SoccerDataBase", 2);
+    var request = window.indexedDB.open("SoccerDataBase", version);
 
     request.onerror = function(event) {
         console.log("error: ");

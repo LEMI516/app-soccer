@@ -14,7 +14,7 @@ $( document ).ready(function() {
 });
 
 function SQL_DATA_BASE_UPLOADED(){
-    var request = window.indexedDB.open("SoccerDataBase", 2);
+    var request = window.indexedDB.open("SoccerDataBase", version);
     torneo=JSON.parse(localStorage.getItem('torneo'));
     $('#h1PageTorneoAdmon').html(torneo.competencia+" "+torneo.edicion); 
 

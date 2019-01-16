@@ -5,7 +5,7 @@ $( document ).ready(function() {
 });
 
 function SQL_DATA_BASE_UPLOADED(){
-    var request = window.indexedDB.open("SoccerDataBase", 2);
+    var request = window.indexedDB.open("SoccerDataBase", version);
     request.onerror = function(event) {
         console.log("error: ");
     };
@@ -42,6 +42,7 @@ function SQL_DATA_BASE_UPLOADED(){
         objectStore.createIndex("id", "id", { unique: true });
         objectStore.createIndex("id_comp", "id_comp", { unique: false });              
         console.log("tablas creadas exitosamente");
+        alert("tablas creadas exitosamente");
     }
 }
 

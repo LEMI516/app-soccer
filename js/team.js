@@ -8,7 +8,7 @@ $( document ).ready(function() {
 });
 
 function SQL_DATA_BASE_UPLOADED(){
-    var request = window.indexedDB.open("SoccerDataBase", 2);
+    var request = window.indexedDB.open("SoccerDataBase", version);
 
     request.onerror = function(event) {
         console.log("error: ");
@@ -61,15 +61,12 @@ function readTeams() {
     var type=$('#typeTeam').val(); 
     var elements=(type==='CLUB')?'confederationTeam|typeTeam|parentTeam|name|abreviatura':'confederationTeam|typeTeam|name|abreviatura';
     var isValid=isValidValues(elements);
-    alert(elements)
     if(isValid){
         var v=values(elements);
         var team;
         if(type==='CLUB') team={ conf:v[0],type:v[1],parent:v[2],name:v[3].toUpperCase(),abre:v[4].toUpperCase() };
         else team={ conf:v[0],type:v[1],parent:v[0],name:v[2].toUpperCase(),abre:v[3].toUpperCase() };
-        alert(team)
         defaultSelected=v[2];
-        alert('defacult')
         add("teams",team,'cleanValues()');
     }else{
         Tooltip('Debe ingresar todos los datos');
@@ -81,14 +78,7 @@ function cleanValues(){
 }
 
 function add(nameobjectStore,objectStore,name_funcion) {
-    alert('voy agregar');
-    var request;
-    try {
-        request = db.transaction([nameobjectStore], "readwrite").objectStore(nameobjectStore).add(objectStore);
-    }catch(err) {
-        alert(err);
-    }
-    alert('agrego');
+    var request = db.transaction([nameobjectStore], "readwrite").objectStore(nameobjectStore).add(objectStore);
     request.onsuccess = function(event) {
        Tooltip('Operación realizada exitosamente');
        if(name_funcion!= null && name_funcion!= undefined && name_funcion!= '') eval(name_funcion);
