@@ -63,9 +63,27 @@ function isValidValuesElements(elemts){
 }
 
 function Tooltip(msj){
-    $.mobile.toast({
-        message: msj
-    });
+    $('<div>'+msj+'</div>')
+	.css({ 
+        "position" : "fixed",
+        "bottom": 0,
+        "background-color":"#515050",
+        "color": "white",
+        "font-size": "1em",
+        "height": "auto",
+        "width": "90%",
+        "border-radius": "5px",
+        "padding": "5px",
+        "margin-bottom": "2%",
+        "margin-left": "4%",
+        "margin-right": "2%", 
+        "text-align": "center",
+        "z-index": "3000"
+    })
+	.appendTo( $.mobile.pageContainer ).delay( 1500 )
+	.fadeOut( 400, function(){
+		$(this).remove();
+    });    
 }
   
 function selectContainer(id){

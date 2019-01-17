@@ -4,6 +4,7 @@ var defaultSelected='';
 
 $( document ).ready(function() {
     innerSelectSimple('confederationTeam',confederaciones);
+    innerSelectSimple('confederationTeamUpdate',confederaciones);
     SQL_DATA_BASE_UPLOADED();
 });
 
@@ -111,7 +112,7 @@ function searchGeneral(opc,params){
         if(opc==='0'){
             if(t.type===params[0] || params[0]==='ALL'){
                 html+='<li >'
-                        +'<a href="#"><h2>'+(k+1)+'.'+t.name+'</h2><p>'+t.abre+' - '+t.parent+'</p></a>'
+                        +'<a onclick="updateTeam(\''+t.abre+'\')" href="#"><h2>'+(k+1)+'.'+t.name+'</h2><p>'+t.abre+' - '+t.parent+'</p></a>'
                         +'<a data-icon="delete" onclick="dialogEliminarTeam('+t.id+',\''+t.name+'\')" href="#"></a>'
                       +'</li>';
                 k++;
@@ -122,7 +123,7 @@ function searchGeneral(opc,params){
             var name=t.name.toLowerCase();
             if(name.indexOf(params[0].toLowerCase())>=0 && (t.type===params[1] || params[1]==='ALL')){
                 html+='<li >'
-                        +'<a href="#"><h2>'+(k+1)+'.'+t.name+'</h2><p>'+t.abre+' - '+t.parent+'</p></a>'
+                        +'<a onclick="updateTeam(\''+t.abre+'\')" href="#"><h2>'+(k+1)+'.'+t.name+'</h2><p>'+t.abre+' - '+t.parent+'</p></a>'
                         +'<a data-icon="delete" onclick="dialogEliminarTeam('+t.id+',\''+t.name+'\')" href="#"></a>'
                       +'</li>';                
                 k++;
@@ -155,5 +156,91 @@ function deleteTeam(nameobjectStore,id,name_funcion){
     };
     request.onerror = function(event) {
         Tooltip('Ocurrio un error en la base de datos');
+    }
+}
+
+function updateTeam(abre){
+    var t=findTeamByAbre(abre,teamsArray);
+    Itm('hddTypeTeamUpdate').value=t.type;
+    Itm('hddAbreviaturaActually').value=t.abre;
+    Itm('confederationTeamUpdate').value=t.conf;
+    $("#confederationTeamUpdate").prev().html(t.conf);
+    Itm('nameUpdate').value=t.name;
+    Itm('abreviaturaUpdate').value=t.abre;
+    loadParentsUpdate();
+    dialog('dialog_modify_team');
+}
+
+function loadParentsUpdate(){
+    var value=$('#hddTypeTeamUpdate').val();
+    if(value=='SEL'){
+        $('#parentTeamUpdate').parent().hide();
+    }else{
+        $('#parentTeamUpdate').parent().show();
+        var t=findTeamByAbre(ItmV('abreviaturaUpdate'),teamsArray);
+        var defaultT=t.parent;
+        var conf=$('#confederationTeamUpdate').val();
+        var selParent=Itm('parentTeamUpdate');
+        var list=teamsArray;
+        var html='';
+        var i=0;
+        var isExiste=false;
+        var nameParent='';
+        for(i in list){
+            var t=list[i];
+            if(t.conf===conf && t.type==='SEL'){
+                html+='<option value="'+t.abre+'" >'+t.name+'</option>';
+            }
+            if(t.abre==defaultT){
+                isExiste=true;
+                nameParent=t.name;
+            }
+        }
+        selParent.innerHTML=html; 
+        selParent.value=defaultT;
+        if(isExiste) $("#parentTeamUpdate").prev().html(nameParent);
+    }
+   
+}
+
+function updateTeamBase() {
+    var type=$('#hddTypeTeamUpdate').val(); 
+    var conf=ItmV('confederationTeamUpdate');
+    var parent=ItmV('parentTeamUpdate');
+    var name=ItmV('nameUpdate');
+    var abre=ItmV('abreviaturaUpdate');
+    var abraAnt=ItmV('hddAbreviaturaActually');
+    var elements=(type==='CLUB')?'confederationTeamUpdate|parentTeamUpdate|nameUpdate|abreviaturaUpdate':'confederationTeamUpdate|nameUpdate|abreviaturaUpdate';
+    var isValid=isValidValues(elements);
+    var team=findTeamByAbre(abraAnt,teamsArray);
+    if(isValid){
+        var objectStore = db.transaction(["teams"],"readwrite").objectStore("teams");
+        var index =  objectStore.index('id').openCursor(IDBKeyRange.only(team.id));
+        index.onsuccess = function(event) {
+            var cursor = event.target.result;
+            if (cursor) {
+                var object=cursor.value;
+                if(type==='SEL'){
+                    object.conf=conf;
+                    object.name=name.toUpperCase();
+                    object.abre=abre.toUpperCase();
+                    object.parent=conf;
+                }else{
+                    object.conf=conf;
+                    object.name=name.toUpperCase();
+                    object.abre=abre.toUpperCase();
+                    object.parent=parent;
+                }
+                var res = cursor.update(object);
+                cursor.continue();
+            }else{
+                Tooltip('Registro Actualizado'); 
+                close_dialog();
+                readTeams();
+            }
+        };
+    }else{
+        Tooltip('Debe ingresar todos los datos');
+
     }
 }
