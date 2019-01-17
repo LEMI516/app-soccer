@@ -64,8 +64,8 @@ function readTeams() {
     if(isValid){
         var v=values(elements);
         var team;
-        if(type==='CLUB') team={ conf:v[0],type:v[1],parent:v[2],name:v[3].toUpperCase(),abre:v[4].toUpperCase() };
-        else team={ conf:v[0],type:v[1],parent:v[0],name:v[2].toUpperCase(),abre:v[3].toUpperCase() };
+        if(type==='CLUB') team={ conf:v[0],type:v[1],parent:v[2],name:v[3].toUpperCase(),abre:v[4].toUpperCase(),aux:'' };
+        else team={ conf:v[0],type:v[1],parent:v[0],name:v[2].toUpperCase(),abre:v[3].toUpperCase(),aux:'' };
         defaultSelected=v[2];
         add("teams",team,'cleanValues()');
     }else{

@@ -42,7 +42,7 @@ function SQL_DATA_BASE_UPLOADED(){
         objectStore.createIndex("id", "id", { unique: true });
         objectStore.createIndex("id_comp", "id_comp", { unique: false });              
         console.log("tablas creadas exitosamente");
-        alert("tablas creadas exitosamente");
+        //alert("tablas creadas exitosamente");
     }
 }
 

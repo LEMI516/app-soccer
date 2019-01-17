@@ -88,6 +88,25 @@
     -moz-box-shadow: inset 0px 0px 3px 2px rgba(119, 119, 119, 0.74);
     -webkit-box-shadow: inset 0px 0px 3px 2px rgba(119, 119, 119, 0.74);  
     background-color: #fff;    
-    height: 320px;
+    height: 300px;
     overflow: auto 
+}
+
+.bar-load{
+    border-radius: 3px;
+    border: solid 1px #5863f8;
+    height: 20px;
+    width: 100%;
+}
+
+.bar-load div{
+    margin: 0;
+    padding: 0;
+    height: 20px;
+    width: 20%;
+    background-color: #5863f8;
+    text-align: center;
+    justify-content: center;
+    color: #FFFFFF;
+    font-weight: bold;
 }

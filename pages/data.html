@@ -35,9 +35,10 @@
                         <option value="team">PLANTILLAS</option>
                         <option value="team">TORNEOS</option>
                     </select>  
-                    <button onclick="pasteTxt()" class="ui-btn ui-btn-inline">Pegar</button>
-                    <button onclick="pasteTxt()" class="ui-btn ui-btn-inline">Ejecutar</button> 
-                    <div class="container_ie" ></div>
+                    <div style="display: none" id="bar_load" class="bar-load"><div id="bar_load_child" style="width: 0%"></div></div>
+                    <button onclick="limpiarTexto()" class="ui-btn ui-btn-inline">Limpiar</button>
+                    <button onclick="cargarBaseDatos()" class="ui-btn ui-btn-inline">Ejecutar</button> 
+                    <textarea id="container_json_import" class="container_ie"></textarea>
                 </div>
             </div>
             <div id="fragment-2">
