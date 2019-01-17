@@ -41,10 +41,12 @@ function calcularRankingHistorialSimple(){
     html='';
     for(var i=1;i<=teamsOrderHistorial.length;i++){
         var t=teamsOrderHistorial[i-1];
-        html+='<div >'
-            +'<h1>'+i+'.'+t.t.name+' ('+t.t.parent+')<p>'+t.pun+'</p></h1>'
-            //+'<div class="stargan" >'+t.p+'</div>'
-        +'</div>';
+        html+='<tr>'
+              +'<td>'+i+'.'+t.t.name+' ('+t.t.parent+') -  '+t.pun+'</td>'
+              +'<td>'+t.p+'</td>'
+              +'<td>'+t.s+'</td>'
+              +'<td>'+(parseInt(t.tr)+parseInt(t.c))+'</td>'
+            +'</tr>';
     }
     $('#ranking').html(html);     
 }
