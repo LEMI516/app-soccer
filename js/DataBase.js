@@ -25,8 +25,7 @@ function SQL_DATA_BASE_UPLOADED(){
         //Table historial
         objectStore = db.createObjectStore("history", {keyPath: "id", autoIncrement:true});
         objectStore.createIndex("id", "id", { unique: true });
-        objectStore.createIndex("idteam", "idteam", { unique: false });
-        objectStore.createIndex("idparent", "idparent", { unique: false });   
+        objectStore.createIndex("torn", "torn", { unique: false });
         //Table plantilla
         objectStore = db.createObjectStore("plantilla", {keyPath: "id", autoIncrement:true});
         objectStore.createIndex("id", "id", { unique: true });         

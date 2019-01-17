@@ -225,6 +225,16 @@ function findTeamByAbre(abre,list){
     return null;
 }
 
+function findTeamByName(name,list){
+    for(i in list){
+        var t=list[i];
+        if(t.name.toLowerCase()==name.toLowerCase()){
+            return t;
+        }
+    }
+    return null;
+}
+
 function findEntityBy(id,list){
     for(i in list){
         var t=list[i];
@@ -326,4 +336,37 @@ function close_dialog(){
         btns[i].click();
         break;
     }
+}
+
+function teamsByHistorialComp(list){
+    var teamsHistorial=new Array();
+    var i=0;
+    for(i in list){
+        var h=list[i];
+        if(!findTeamHistoriaList(h.cam.abre,teamsHistorial)) teamsHistorial.push({t:h.cam,pun:0,p:0,s:0,tr:0,c:0});
+        if(!findTeamHistoriaList(h.sub.abre,teamsHistorial)) teamsHistorial.push({t:h.sub,pun:0,p:0,s:0,tr:0,c:0});
+        if(!findTeamHistoriaList(h.ter.abre,teamsHistorial)) teamsHistorial.push({t:h.ter,pun:0,p:0,s:0,tr:0,c:0});
+        if(!findTeamHistoriaList(h.cuar.abre,teamsHistorial)) teamsHistorial.push({t:h.cuar,pun:0,p:0,s:0,tr:0,c:0});
+    }
+    return teamsHistorial;
+}
+
+function findTeamHistoriaList(abre,list){
+    var i=0;
+    for(i in list){
+        var t=list[i];
+        if(t.t.abre===abre){
+            return true;
+        }
+    }
+    return false;
+}
+
+function orderTeamsHistorialByCompetencia(listTeams){
+    listTeams.sort(function(a, b) {
+        var puna=parseInt(a.pun);
+        var punb=parseInt(b.pun);
+        return punb-puna;
+    });
+    return  listTeams;
 }

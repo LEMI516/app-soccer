@@ -33,7 +33,7 @@ function addHistorico(){
     var valores=[torneo,cam,sub,ter,cuar];
     var isValid=isValidValuesElements(valores);
     if(isValid){
-        var historico={ torn:torneo,cam:cam,sub:sub,ter:ter,cuar:cuar };
+        var historico={ torn:torneo,cam:cam,sub:sub,ter:ter,cuar:cuar,comp:'' };
         add("history",historico,'cleanValues();');
     }else{
         Tooltip('Debe ingresar todos los datos');
@@ -104,19 +104,25 @@ function readHistoricoTeams() {
 function buildListHistory(){
     var tor=ItmV('txtTorneoHistory');
     var html='';
-    var j=0;
+    var j=HistoricoTeamsArray.length;
     if(tor!=''){
+        var auxHistoricoTeamsArray=new Array();
         for(var i=HistoricoTeamsArray.length-1;i>=0;i--){
             var his=HistoricoTeamsArray[i];
             if(his.tor===tor){
-                j++ 
-                html+='<div >'
-                        +'<h3>Edicion '+j+'</h3>'
-                        +'<h1>'+his.cam.name+' ('+his.cam.parent+')<img src="../img/icon_trofeo.png" class="img_tro" /></h1>'
-                        +'<h2>'+his.sub.name+'('+his.sub.parent+')</h2>'
-                        +'<h4>'+his.ter.name+'('+his.ter.parent+') - '+his.cuar.name+'('+his.cuar.parent+')</h4>'
-                    +'</div>';
+                auxHistoricoTeamsArray.push(his);
             }
+        }
+        var j=auxHistoricoTeamsArray.length;
+        for(var i=0;i<auxHistoricoTeamsArray.length;i++){
+            var his=auxHistoricoTeamsArray[i];
+            html+='<div >'
+                +'<h3>Edicion '+j+'</h3>'
+                +'<h1>'+his.cam.name+' ('+his.cam.parent+')<img src="../img/icon_trofeo.png" class="img_tro" /></h1>'
+                +'<h2>'+his.sub.name+'('+his.sub.parent+')</h2>'
+                +'<h4>'+his.ter.name+'('+his.ter.parent+') - '+his.cuar.name+'('+his.cuar.parent+')</h4>'
+            +'</div>';
+            j--;
         }
     }
     $('#history').html(html); 

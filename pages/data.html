@@ -32,13 +32,16 @@
                 <div data-role="content">
                     <select id="tabla" class="combo" data-theme="b" >
                         <option value="team">EQUIPOS</option>
-                        <option value="team">PLANTILLAS</option>
-                        <option value="team">TORNEOS</option>
+                        <option value="history">HISTORICOS</option>
+                        <option value="plantilla">PLANTILLAS</option>
+                        <option value="competencia">COMPETENCIAS</option>
+                        <option value="competencia_team">EQUIPOS-COMPETENCIAS</option>
+                        <option value="competencia_fixture">FIXTURE</option>
                     </select>  
                     <div style="display: none" id="bar_load" class="bar-load"><div id="bar_load_child" style="width: 0%"></div></div>
                     <button onclick="limpiarTexto()" class="ui-btn ui-btn-inline">Limpiar</button>
                     <button onclick="cargarBaseDatos()" class="ui-btn ui-btn-inline">Ejecutar</button> 
-                    <textarea id="container_json_import" class="container_ie"></textarea>
+                    <textarea id="container_json_import" ></textarea>
                 </div>
             </div>
             <div id="fragment-2">

@@ -38,10 +38,12 @@ function cargarBaseDatos(){
     var tabla=ItmV('tabla');
     if(tabla==='team'){
         loadTeamDataBase();
+    }else if(tabla==='history'){
+        loadHistoryDataBase();
     }
 }
 
-
+/* PROCESO DE CARGUE MASIVO DE EQUIPOS ATRAVES DE UN JSON */
 function loadTeamDataBase(){
     var json_txt=Itm('container_json_import').value.trim(); 
     var barLoad=Itm('bar_load');
@@ -136,3 +138,43 @@ function add(nameobjectStore,objectStore,name_funcion,msj) {
         }
     };
  }
+
+ /* PROCESO DE CARGUE MASIVO DE HISTORIAL ATRAVES DE UN JSON */
+ function loadHistoryDataBase(){
+    var json_txt=Itm('container_json_import').value.trim(); 
+    var barLoad=Itm('bar_load');
+    var barLoadChild=Itm('bar_load_child');
+    $(barLoad).hide();
+    if(json_txt!=''){
+        var list=JSON.parse(json_txt);
+        $(barLoad).show();
+        var tam=list.length;
+        var count=0,noencontrados=0;
+        for(var i=list.length-1;i>=0;i--){
+            var h=list[i];
+            var torneo=import_id_torneo(h.id_torneo);
+            if(torneo==null) continue;
+            count++;
+            var porcentaje=parseFloat((100*count)/tam);
+            var resultado = Math.round(porcentaje*Math.pow(10,2))/Math.pow(10,2);
+            var Tcam=findTeamByName(h.campeon,teamsArray);
+            var Tsub=findTeamByName(h.subcampeon,teamsArray);
+            var Tter=findTeamByName(h.tercero,teamsArray);
+            var Tcuar=findTeamByName(h.cuarto,teamsArray);
+            if(Tcam==null || Tsub==null || Tter==null || Tcuar==null){
+                noencontrados++;
+                continue
+            }
+            cam=Tcam.abre;
+            sub=Tsub.abre;
+            ter=Tter.abre;
+            cuar=Tcuar.abre;
+            var historico={ torn:torneo,cam:cam,sub:sub,ter:ter,cuar:cuar,comp:'' };
+            add("history",historico,'','');
+            $(barLoadChild).css({"width": porcentaje+"%"});
+            $(barLoadChild).html(resultado+"%");
+        }
+        Itm('container_json_import').value='';
+        if(noencontrados>0) Tooltip('Total '+noencontrados+' no encontrados');
+    }
+}

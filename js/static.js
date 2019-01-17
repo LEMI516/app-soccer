@@ -1,5 +1,6 @@
 var confederaciones=["UEFA","CONMEBOL","CONCACAF","CAF","AFC","OFC"];
 var typeTeamList=["CLUB","SELECCION"];
+var puntajesGeneral=[100,70,40,30];
 var version=2.1;
 
 function icon_elim(fun){
@@ -39,6 +40,21 @@ function name_type_match(id){
     var name='';
     if(id=='UNI') name='UNICO';
     else if(id=='LOCVIS') name='LOCAL - VISITANTE';
+    return name;
+}
+
+
+function import_id_torneo(id){
+    var name='';
+    id=parseInt(id);
+    if(id==1) name='LC';
+    else if(id==2) name='CL';
+    else if(id==4) name='UCL';
+    else if(id==3) name='CS';
+    else if(id==5) name='UEL';
+    else if(id==7) name='CM';
+    else if(id==6) name='CMC';
+    else name=null;
     return name;
 }
 
