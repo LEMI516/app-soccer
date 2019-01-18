@@ -128,3 +128,21 @@
     z-index: 1000;
 }
 
+.bar-load-animate{
+    border-radius: 3px;
+    border: solid 1px #5863f8;
+    height: 20px;
+    width: 100%;
+    display:inline-flex;
+}
+
+.bar-load-animate div{
+    margin: 0;
+    padding: 0;
+    height: 18px;
+    width: 5%;
+    background-color: #5863f8;
+    border: solid 1px #fff;
+    display: inline-block;
+}
+

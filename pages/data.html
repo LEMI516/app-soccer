@@ -33,11 +33,10 @@
                     <select id="tabla" class="combo" data-theme="b" >
                         <option value="team">EQUIPOS</option>
                         <option value="history">HISTORICOS</option>
-                        <option value="plantilla">PLANTILLAS</option>
                         <option value="competencia">COMPETENCIAS</option>
                         <option value="competencia_team">EQUIPOS-COMPETENCIAS</option>
                         <option value="competencia_fixture">FIXTURE</option>
-                    </select>  
+                    </select>
                     <div style="display: none" id="bar_load" class="bar-load"><div id="bar_load_child" style="width: 0%"></div></div>
                     <button onclick="limpiarTexto()" class="ui-btn ui-btn-inline">Limpiar</button>
                     <button onclick="cargarBaseDatos()" class="ui-btn ui-btn-inline">Ejecutar</button> 
@@ -45,7 +44,23 @@
                 </div>
             </div>
             <div id="fragment-2">
-                
+                <div data-role="content">
+                    <input type="text" placeholder="Direccion IP" value="" id="ipServer" >
+                    <select id="tablaExport" class="combo" data-theme="b" >
+                        <option value="teams">EQUIPOS</option>
+                        <option value="plantilla">PLANTILLAS</option>
+                        <option value="history">HISTORICOS</option>
+                        <option value="competencia">COMPETENCIAS</option>
+                        <option value="competencia_team">EQUIPOS-COMPETENCIAS</option>
+                        <option value="competencia_fixture">FIXTURE</option>
+                    </select> 
+                    <select id="operacion" class="combo" data-theme="b" >
+                        <option value="POST">ENVIAR</option>
+                        <option value="GET">RECIBIR</option>
+                    </select>                    
+                    <button onclick="sincronizarData()" class="ui-btn ui-btn-inline">Sincronizar</button> 
+                    <div id="bar_load_ani" class="bar-load-animate"></div>                  
+                </div>
             </div>
         </div>        
         <div data-role="content" id="container_1" name="containers" ></div>        

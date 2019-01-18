@@ -178,3 +178,92 @@ function add(nameobjectStore,objectStore,name_funcion,msj) {
         if(noencontrados>0) Tooltip('Total '+noencontrados+' no encontrados');
     }
 }
+
+function sincronizarData(){
+    var table=ItmV('tablaExport');
+    var ope=ItmV('operacion');
+    var uri;
+    if(ope==='POST'){
+        readData(table,uri);
+    }
+}
+
+function readData(table,uri) {
+    var objectStore = db.transaction([table]).objectStore(table);
+    var dataArray=new Array();
+    objectStore.openCursor().onsuccess = function(event) {
+        var cursor = event.target.result;
+        if (cursor) {
+            dataArray.push(cursor.value);
+            cursor.continue();
+        }else{
+            sendDataExport(dataArray,uri); 
+        }
+    };
+ }
+
+var funAnimateVar; 
+
+function sendDataExport(dataArray,uri){
+    var ip=ItmV('ipServer').trim();
+    if(ip!=''){
+        var json=JSON.stringify(dataArray);
+        var url=ip+'/apisoccerhistory/'+method_uri(uri);
+        var headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        headers.append('Accept', 'application/json');
+        headers.append('Access-Control-Allow-Origin', '*');
+        headers.append('Access-Control-Allow-Credentials', 'false');
+        headers.append('Access-Control-Allow-Methods','POST');
+
+        try {
+            $.ajax({
+                type: 'POST',
+                headers: headers,
+                dataType: 'json',
+                contentType : "application/json",
+                data: json,
+                url: url,
+                beforeSend: function () {
+                    funAnimateVar=setInterval(animate_bar_load, 100); 
+                },
+                success: function (data) {
+                    stop_animate_bar_laod();
+                    console.log(data);
+                },
+                error : function(data) { 
+                    stop_animate_bar_laod();
+                    console.log(data);
+                } 
+            });            
+        } catch (error) {
+            Tooltip('Error '+error);
+            stop_animate_bar_laod();
+        }
+        /*$.ajax({
+            dataType: 'json',
+            xhrFields: {withCredentials: true},
+            async: false,
+            data: json,
+            url: url
+        }).then(function (data) {
+            stop_animate_bar_laod();
+            console.log(response);
+        });*/
+    }
+}
+
+ function animate_bar_load(){
+    var div=Itm('bar_load_ani');
+    var bars=Itms('bl');
+    if(bars.length>=17){
+        div.innerHTML='';
+    }else{
+        div.innerHTML=div.innerHTML+'<div name="bl"></div>';
+    }
+}
+
+function stop_animate_bar_laod(){
+    clearInterval(funAnimateVar);
+    Itm('bar_load_ani').innerHTML='';
+}

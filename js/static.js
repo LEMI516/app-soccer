@@ -3,7 +3,7 @@ var typeTeamList=["CLUB","SELECCION"];
 var puntajesGeneral=[100,70,40,30];
 var puntajesCP=[100,70,40,30];
 var puntajesSC=[60,30,15,8];
-var version=2.1;
+var version=2;
 
 function icon_elim(fun){
     return '<img class="img_elim" src="../img/icon_delete.png" onclick="'+fun+'" >';
@@ -58,6 +58,10 @@ function import_id_torneo(id){
     else if(id==6) name='CMC';
     else name=null;
     return name;
+}
+
+function method_uri(caso){
+    if(caso='saveTeam') return 'teams/'
 }
 
 
