@@ -1,6 +1,8 @@
 var confederaciones=["UEFA","CONMEBOL","CONCACAF","CAF","AFC","OFC"];
 var typeTeamList=["CLUB","SELECCION"];
 var puntajesGeneral=[100,70,40,30];
+var puntajesCP=[100,70,40,30];
+var puntajesSC=[60,30,15,8];
 var version=2.1;
 
 function icon_elim(fun){

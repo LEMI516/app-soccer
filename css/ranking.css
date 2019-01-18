@@ -1,15 +1,15 @@
 .img_firts{
-    width: 70%;
+    width: 90%;
     height: auto;
 }
 
 .img_second{
-    width: 70%;
+    width: 90%;
     height: auto;
 }
 
 .img_podio{
-    width: 28%;
+    width: 90%;
     height: auto;
 }
 
@@ -20,15 +20,41 @@
 
 .ranking td, .ranking th {
     border: 1px solid #ddd;
-    padding: 8px;
+    font-size: 0.8em;
+    width: 10%;   
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 2px;
+    padding-right: 2px; 
+    text-align: center;   
 }
 
 .ranking tr:nth-child(even){background-color: #f2f2f2;}
 
 .ranking th {
-    padding-top: 12px;
-    padding-bottom: 12px;
-    text-align: left;
+    text-align: center;
     background-color:#5863f8;
     color: white;
+    text-align: center !important; 
+    border: 1px solid #ddd;
 }
+
+.ranking th:first-child {
+    width: 60%;
+    font-weight: bold;
+}
+
+.ranking td:first-child {
+    width: 60%;
+    font-weight: bold;
+    font-size: 0.8em;
+    text-align: left;
+}
+
+.ranking font{
+    font-weight: bold;
+    font-size: 1.0em;    
+}
+
+
+

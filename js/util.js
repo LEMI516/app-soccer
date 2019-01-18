@@ -343,10 +343,10 @@ function teamsByHistorialComp(list){
     var i=0;
     for(i in list){
         var h=list[i];
-        if(!findTeamHistoriaList(h.cam.abre,teamsHistorial)) teamsHistorial.push({t:h.cam,pun:0,p:0,s:0,tr:0,c:0});
-        if(!findTeamHistoriaList(h.sub.abre,teamsHistorial)) teamsHistorial.push({t:h.sub,pun:0,p:0,s:0,tr:0,c:0});
-        if(!findTeamHistoriaList(h.ter.abre,teamsHistorial)) teamsHistorial.push({t:h.ter,pun:0,p:0,s:0,tr:0,c:0});
-        if(!findTeamHistoriaList(h.cuar.abre,teamsHistorial)) teamsHistorial.push({t:h.cuar,pun:0,p:0,s:0,tr:0,c:0});
+        if(!findTeamHistoriaList(h.cam.abre,teamsHistorial) && h.cam.abre!='FIFA') teamsHistorial.push({t:h.cam,pun:0,p:0,s:0,tr:0,c:0});
+        if(!findTeamHistoriaList(h.sub.abre,teamsHistorial) && h.sub.abre!='FIFA') teamsHistorial.push({t:h.sub,pun:0,p:0,s:0,tr:0,c:0});
+        if(!findTeamHistoriaList(h.ter.abre,teamsHistorial) && h.ter.abre!='FIFA') teamsHistorial.push({t:h.ter,pun:0,p:0,s:0,tr:0,c:0});
+        if(!findTeamHistoriaList(h.cuar.abre,teamsHistorial) && h.cuar.abre!='FIFA') teamsHistorial.push({t:h.cuar,pun:0,p:0,s:0,tr:0,c:0});
     }
     return teamsHistorial;
 }
@@ -369,4 +369,27 @@ function orderTeamsHistorialByCompetencia(listTeams){
         return punb-puna;
     });
     return  listTeams;
+}
+
+function scaleTxt(texto){
+    var is=false;
+    var scale=0;
+    if(texto.length>25){
+        scale=-2;
+        is=true;
+    }else if(texto.length>20){
+        scale=-1;
+        is=true;
+    }
+    return {is:is,scl:scale};
+}
+
+function filterHistoricoTeamsByTorneo(list,torn){
+    var i=0;
+    var rList=new Array();
+    for(i=0;i<list.length;i++){
+        var h=list[i];
+        if(h.tor==torn) rList.push(h);
+    }
+    return rList;
 }
