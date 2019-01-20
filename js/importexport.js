@@ -183,8 +183,13 @@ function sincronizarData(){
     var table=ItmV('tablaExport');
     var ope=ItmV('operacion');
     var uri;
+    
     if(ope==='POST'){
+        if(table=='teams') uri='saveTeam';
+        if(table=='history') uri='saveHistory';
         readData(table,uri);
+    }else{
+
     }
 }
 
@@ -230,10 +235,12 @@ function sendDataExport(dataArray,uri){
                 success: function (data) {
                     stop_animate_bar_laod();
                     console.log(data);
+                    Tooltip('Proceso realizado exitosamente');
                 },
                 error : function(data) { 
                     stop_animate_bar_laod();
                     console.log(data);
+                    Tooltip('Error '+data);
                 } 
             });            
         } catch (error) {

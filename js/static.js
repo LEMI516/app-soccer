@@ -62,6 +62,7 @@ function import_id_torneo(id){
 
 function method_uri(caso){
     if(caso='saveTeam') return 'teams/'
+    if(caso='saveHistory') return 'historys/'
 }
 
 
