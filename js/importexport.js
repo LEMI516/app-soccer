@@ -240,11 +240,11 @@ function sendDataExport(dataArray,uri){
                 error : function(data) { 
                     stop_animate_bar_laod();
                     console.log(data);
-                    Tooltip('Error '+data);
+                    Tooltip('Ocurrio un error al sincronizar datos');
                 } 
             });            
         } catch (error) {
-            Tooltip('Error '+error);
+            Tooltip('Ocurrio un error al sincronizar datos, causa:'+error);
             stop_animate_bar_laod();
         }
         /*$.ajax({

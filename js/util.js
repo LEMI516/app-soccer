@@ -282,7 +282,7 @@ function orderTeamsFixtureByPunGd(listTeams){
     listTeams.sort(function(a, b) {
         var fixa = a.fix
         var fixb = b.fix
-        if (fixa.idsubfase == fixb.idsubfase) {
+        if (fixa.fk == fixb.fk) {
             var puna=parseInt(fixa.pun);
             var gda=parseInt(fixa.gd);
             var punb=parseInt(fixb.pun);
@@ -392,4 +392,42 @@ function filterHistoricoTeamsByTorneo(list,torn){
         if(h.tor==torn) rList.push(h);
     }
     return rList;
+}
+
+function findTeamForFase(list,idf){
+    var i=0;
+    var aux=new Array();
+    for(i in list){
+        var f=list[i].fase;
+        var t=list[i].team;
+        if(list[i].pk==idf){
+            aux.push(t);
+        }
+    }
+    return aux;
+}
+
+function findTeamForFixture(list,idf){
+    var i=0;
+    var aux=new Array();
+    for(i in list){
+        var c=list[i];
+        var t=c.team;
+        if(c.fix.pkf==idf){
+            aux.push(c);
+        }
+    }
+    return aux;
+}
+
+function findTeamForFixtureGen(list,idf){
+    var i=0;
+    var aux=new Array();
+    for(i in list){
+        var c=list[i];
+        if(c.fix.fk==idf){
+            aux.push(c);
+        }
+    }
+    return aux;
 }

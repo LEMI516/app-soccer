@@ -25,7 +25,7 @@ function addTorneo(){
     if(isValid){
         var v=values(elements);
         var p=findById(plantillasArray,v[1]);
-        var torneo={ competencia:v[0],edicion:torneosArray.length+1,name:name_torneo(v[0]),plantilla:p };
+        var torneo={pk:v[0]+(torneosArray.length+1),competencia:v[0],edicion:torneosArray.length+1,name:name_torneo(v[0]),plantilla:p };
         add("competencia",torneo,'cleanValues()');
     }else{
         Tooltip('Debe ingresar todos los datos');

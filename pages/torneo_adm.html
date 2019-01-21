@@ -13,25 +13,18 @@
     <script src="../jquerym/jquery-mobile-toast.js"></script>
     <script src="../js/static.js" type="text/javascript" ></script>
     <script src="../js/util.js" type="text/javascript" ></script>
-    <script src="../js/torneos_adm.js" type="text/javascript" ></script>
+    <script src="../js/ContextInitialize.js" type="text/javascript" ></script>
+    <script src="../js/torneo_administrar.js" type="text/javascript" ></script>
+    <script src="../js/torneo_administrar_aux.js" type="text/javascript" ></script>
     
 </head>
 <body >
     <div data-role="page" data-theme="a">
         <div data-role="header" data-transition="none" data-position="fixed" style="position: fixed" >
+            <a href="#" onclick="location.href='torneos.html'" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left ui-icon-carat-l">BACK</a>
             <h1 id="h1PageTorneoAdmon">Administrar Torneo</h1>
-            <a href="#nav-panel" data-icon="bars" data-iconpos="notext">Menu</a>
+            <a href="#" onclick="dialog('dialog_agregar_equipo');" class="ui-btn-right ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-right ui-icon-plus">AGR</a>
         </div> 
-        <div data-role="panel" data-position="left" data-position-fixed="false" data-display="reveal" id="nav-panel" data-theme="a" >
-            <ul data-role="listview" data-theme="a" data-divider-theme="a" style="margin-top:-16px;" class="nav-search">
-                <li data-icon="delete" style="background-color:#111;">
-                    <a id="mnu_closed" href="#" data-rel="close">Cerrar</a>
-                </li>
-                <li data-filtertext="wai-aria voiceover accessibility screen reader">
-                    <a onclick="location.href='torneos.html'" >Regresar</a>
-                </li>  
-            </ul>                    
-        </div>
         <div data-role="tabs" style="padding: 0">
             <div data-role="navbar" data-iconpos="top">
                 <ul>
@@ -41,22 +34,27 @@
                 </ul>
             </div>
             <div id="fragment-1">
-                <button onclick="dialog('dialog_agregar_equipo');" >AGREGAR EQUIPO +</button>  
-                <ul id="teams" data-theme="b" data-role="listview" data-inset="true"></ul> 
+                <div data-role="content">
+                    <ul id="teams" data-theme="b" data-role="listview" data-inset="true"></ul> 
+                </div>
             </div>
             <div id="fragment-2">
-                <div id="divFixChild" ></div>
+                <div data-role="content">
+                    <ul id="fixture" data-theme="b" data-role="listview" data-inset="true" data-divider-theme="b"></ul>
+                </div>
             </div>
             <div id="fragment-3">
-                <label >CONSTRUIR FASE</label><br>
-                <select id="selFases" class="combo" onchange="iniFase()" ></select>
-                <button class="button_form" id="btnNextFase" disabled onclick="nextFase()" >SIGUIENTE FASE</button><br>
-                <label >EQUIPOS</label><br>
-                <div class="search" style="height: 150px;" ><table id="tableTeamsforFase" class="tdialog"></table></div>
-                <br><label >EQUIPOS EN FASE</label><img class="img" src="../img/icon_load.png" onclick="organizeFixtureAutmatic()" ><br>
-                <div class="search" style="height: 150px;" ><table id="teamsTemasFase" class="table"></table></div>            
-                <button class="button_dialog" onclick="createFixture()" >GUARDAR</button>
-                <button class="button_dialog" onclick="close_dialog_confirm()" >SALIR</button>
+                <div data-role="content">
+                    <select id="selFases" class="combo" data-theme="b" onchange="initFase('I')" ></select>
+                    <fieldset data-role="controlgroup" data-theme="b" data-type="horizontal" data-mini="true">
+                        <input type="radio" name="radio-choice-b" id="radio-choice-c" value="list" checked="checked">
+                        <label for="radio-choice-c">Manual</label>
+                        <input type="radio" name="radio-choice-b" id="radio-choice-d" value="grid">
+                        <label for="radio-choice-d">Automatico</label>
+                    </fieldset>                    
+                    <button class="button_dialog" onclick="guardarConfiguraciondeFase()" >GUARDAR</button>
+                    <ul id="contentFase" data-theme="b" data-role="listview" data-inset="true" data-divider-theme="b"></ul>
+                </div>
             </div>
         </div>
         <!-- CUSTOMIZADO -->
@@ -90,7 +88,17 @@
                 <button id="btnSaveDialogAddEquipo" onclick="" >GUARDAR</button>
                 <a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-rel="back">Salir</a>
             </div>
-        </div>        
+        </div>  
+        <!--DIALOG ADD TEAM CONFIGURE-->   
+        <div data-role="popup" id="dialog_team_configure" data-overlay-theme="b" data-theme="b" data-dismissible="false" style="max-width:400px;">
+                <div role="main" class="ui-content">
+                    <label><b>AGREGAR EQUIPO</b></label><br>
+                    <div class="search" >
+                        <ul id="teamsCompetenciaList" data-theme="b" data-role="listview" data-inset="true" data-divider-theme="b"></ul>
+                    </div>                                 
+                    <a href="#" name="btnClosedDialogApp" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-rel="back">Salir</a>
+                </div>
+        </div>              
     </div>
 </body>
 </html>
