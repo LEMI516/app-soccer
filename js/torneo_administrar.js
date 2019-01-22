@@ -2,6 +2,7 @@ var executeFun=new Array();
 var torneo;
 var fasesArray;
 var teamsBaseArrayFase;
+var loadteamsBaseArrayFase;
 
 $( document ).ready(function() {
     torneo=JSON.parse(localStorage.getItem('torneo'));
@@ -110,20 +111,43 @@ function buildFixture(){
     if(isFaseFinal){
         for(i=faseFinal.length-1;i>=0;i--){
             var id=parseInt(i)+1;
+            var pkfase='F'+id;
             html2+=innerOption('F'+id,'FASE '+id);
             fasesArray.push({id:'F'+id,pos:id,name:'FASE '+id,n:faseFinal[i],n2:0,type:'FE'});            
             j++;
             var n=parseInt(faseFinal[i]);
             html+='<li data-role="list-divider">Final '+j+'<span class="ui-li-count">'+(n/2)+'</span></li>';
             for(k=0;k<(n/2);k++){
-                var marcadorIda='';
-                var marcadorVuelta='';
-                var marcadorFinal='';
-                html+='<li><a>'
-                    +'<h2>A</h2><span class="ui-li-count">1-0<br>2-0</span>'
-                    +'<h2>B</h2>'
-                    +'<p class="ui-li-aside"><strong>3-0</strong></p>'
+                var fkfase='FE'+pkfase+(k+1);
+                var fixComp=findTeamForFixtureGenAux(teamsCompFixtureArray,fkfase);
+                if(fixComp.length>0){
+                    var t1=fixComp[0];
+                    var t2=fixComp[1];
+                    var marcadorIda='';
+                    var marcadorVuelta='';
+                    var marcadorFinal='';        
+                    var t1gl=parseInt(t1.fix.gl);
+                    var t1gv=parseInt(t1.fix.gv);
+                    var t2gl=parseInt(t2.fix.gl);
+                    var t2gv=parseInt(t2.fix.gv);
+                    if(!isUnico){
+                        marcadorIda=t1gl+'-'+t2gv;
+                        marcadorVuelta='<br>'+t2gl+'-'+t1gv;  
+                        marcadorFinal=(t1gl+t1gv)+'-'+(t2gl+t2gv);
+                    }else{
+                        marcadorIda=t1gl+'-'+t2gl;
+                    }                                
+                    html+='<li><a>'
+                    +'<h2>'+t1.team.name+'('+t1.team.parent+')</h2><span class="ui-li-count">'+marcadorIda+marcadorVuelta+'</span>'
+                    +'<h2>'+t2.team.name+'('+t2.team.parent+')</h2>'
+                    +((!isUnico)?'<p class="ui-li-aside"><strong>'+marcadorFinal+'</strong></p>':'')
                 +'</a></li>';
+                }else{
+                    html+='<li><a>'
+                    +'<h2> - - - </h2><span class="ui-li-count"> - </span>'
+                    +'<h2> - - - </h2>'
+                +'</a></li>';
+                }
             }
         }
     }
@@ -161,6 +185,7 @@ function buildFixture(){
 function initFase(state){
     var idfase=ItmV('selFases');
     if(state=='I') teamsBaseArrayFase=new Array();
+    if(state=='I') loadTeamBaseArray();
     var html='';
     inyHtml('contentFase',''); 
     if(idfase!=''){
@@ -175,7 +200,7 @@ function initFase(state){
                 for(k=0;k<parseInt(fase.n);k++){
                     var fk='G'+(i)+(k+1);
                     var fk2='G'+i;
-                    var ts=findTeamForFase(teamsBaseArrayFase,fk);
+                    var ts=findTeamForFase(unionTeamsBaseArray(),fk);
                     if(ts.length>0){
                         var t=ts[0];
                         html+='<li><a><h2>'+t.name+'('+t.parent+')</h2></a>'
@@ -194,20 +219,20 @@ function initFase(state){
             var n=parseInt(fase.n);
             html+='<li data-role="list-divider">FASE '+fase.pos+'<span class="ui-li-count">'+(n/2)+'</span></li>';
             for(k=0;k<(n/2);k++){
-                var fk='FE'+(k+1);
-                var ts=findTeamForFase(teamsBaseArrayFase,fk);
+                var fk='FE'+fase.id+(k+1);
+                var ts=findTeamForFase(unionTeamsBaseArray(),fk);
                 if(ts.length>0){
                     var t1=' - - - ',t2=' - - - ',fun='',abre1='',abre2='';
                     if(ts.length==1 || ts.length>1){ t1=ts[0].name+'('+ts[0].parent+')';abre1=ts[0].abre; }
                     if(ts.length>1){ t2=ts[1].name+'('+ts[1].parent+')'; abre2=ts[1].abre}
-                    if(ts.length<=1) fun='agregar_equipo_fase(\''+fk+'\',\'FE\')';
+                    if(ts.length<=1) fun='agregar_equipo_fase(\''+fk+'\',\''+fase.id+'\')';
                     html+='<li><a onclick="'+fun+'">'
                         +'<h2>'+t1+'</h2><h2>'+t2+'</h2>'
                         +'</a>'
                         +'<a data-icon="delete" onclick="deleteTeamforBaseTwo(\''+abre1+'\',\''+abre2+'\')" href="#"></a>'
                     +'</li>';
                 }else{
-                    html+='<li><a onclick="agregar_equipo_fase(\''+fk+'\',\'FE\')">'
+                    html+='<li><a onclick="agregar_equipo_fase(\''+fk+'\',\''+fase.id+'\')">'
                         +'<h2> - - - </h2>'
                         +'<h2> - - - </h2>'
                         +'</a>'
@@ -227,6 +252,20 @@ function initFase(state){
 function agregar_equipo_fase(idf,idf2){
     var i=0;var html='';
     var teamsList=teamsCompetenciaforFase();
+    var l=clasificadosArrayMethod();
+    var teamClasifiqued=teamsCompetenciaforFaseClasified(l,idf2);
+
+    if(teamClasifiqued.length>0){
+        html+='<li data-role="list-divider">CLASEFICIADOS FASE ANT<span class="ui-li-count">'+(teamClasifiqued.length)+'</span></li>';
+    }
+    for(i in teamClasifiqued){
+        var x=teamClasifiqued[i];
+        var t=x.c.team;
+        html+='<li >'
+            +'<a onclick="agregar_equipo_en_fase(\''+t.abre+'\',\''+idf+'\',\''+idf2+'\')" href="#">'+(parseInt(i)+1)+'.'+t.name+'<b>('+t.parent+')</b></a>'
+        +'</li>';        
+    }
+    i=0;
     if(teamsList.length>0){
         html+='<li data-role="list-divider">COMPETENCIA<span class="ui-li-count">'+(teamsList.length)+'</span></li>';
     }
@@ -262,9 +301,42 @@ function teamsCompetenciaforFase(){
         var t=x.team;
         k=0;
         isExiste=false;
-        for(k in teamsBaseArrayFase){
-            var tm=teamsBaseArrayFase[k].team;
+        var tl=unionTeamsBaseArray();
+        for(k in tl){
+            var tm=tl[k].team;
             if(t.abre==tm.abre){
+                isExiste=true;
+                break; 
+            }
+        }
+        if(!isExiste){
+            teams.push(x);
+        }
+    }    
+    return teams;
+}
+
+function unionTeamsBaseArray(){
+    var t=new Array();
+    var i=0,j=0;
+    for(i in teamsBaseArrayFase) t.push(teamsBaseArrayFase[i])
+    for(j in loadteamsBaseArrayFase) t.push(loadteamsBaseArrayFase[j]) 
+    return t;
+} 
+
+function teamsCompetenciaforFaseClasified(clasifiedList,idfase){
+    var teams=new Array();
+    var isExiste=false;
+    var i=0;
+    for(i in clasifiedList){
+        var x=clasifiedList[i];
+        var t=x.c.team;
+        k=0;
+        isExiste=false;
+        var tl=unionTeamsBaseArray();
+        for(k in tl){
+            var tm=tl[k].team;
+            if(t.abre==tm.abre && tl[k].pk2==idfase){
                 isExiste=true;
                 break; 
             }
@@ -312,5 +384,16 @@ function guardarConfiguraciondeFase(){
     Tooltip('Fase configurada exitosamente');   
     inyHtml('contentFase',''); 
     Itm('selFases').value='';
-    $("#selFases").prev().html('FASE...');    
+    $("#selFases").prev().html('FASE...');  
+    readCompetenciaFixture(torneo.pk,3);  
+}
+
+function loadTeamBaseArray(){
+    loadteamsBaseArrayFase=new Array();
+    var i=0;
+    for(i in teamsCompFixtureArray){
+        var ent=teamsCompFixtureArray[i];
+        entity={fase:ent.fix.fase,team:ent.team,pk:ent.fix.pkf,pk2:ent.fix.fk};
+        loadteamsBaseArrayFase.push(entity);        
+    }
 }

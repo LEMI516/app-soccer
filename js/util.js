@@ -267,6 +267,17 @@ function findCompetenciFixtureByIdFase(idfase,list){
     return newArray;
 }
 
+function findCompetenciFixtureByIdFaseAux(idfase,list){
+    var newArray=new Array();
+    for(i in list){
+        var t=list[i];
+        if(t.fix.fase.id===idfase){
+            newArray.push(t);
+        }
+    }
+    return newArray;
+}
+
 function findCompetenciFixtureByIdFix(id,list){
     var newArray=new Array();
     for(i in list){
@@ -426,6 +437,18 @@ function findTeamForFixtureGen(list,idf){
     for(i in list){
         var c=list[i];
         if(c.fix.fk==idf){
+            aux.push(c);
+        }
+    }
+    return aux;
+}
+
+function findTeamForFixtureGenAux(list,idf){
+    var i=0;
+    var aux=new Array();
+    for(i in list){
+        var c=list[i];
+        if(c.fix.pkf==idf){
             aux.push(c);
         }
     }
