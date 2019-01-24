@@ -136,8 +136,9 @@ function buildFixture(){
                         marcadorFinal=(t1gl+t1gv)+'-'+(t2gl+t2gv);
                     }else{
                         marcadorIda=t1gl+'-'+t2gl;
-                    }                                
-                    html+='<li><a>'
+                    }        
+                    var ind=(isUnico)?1:0;                        
+                    html+='<li><a onclick="dialog_add_marcador(\''+t1.team.abre+'\',\''+t2.team.abre+'\',\''+t1.fix.id+'\',\''+t2.fix.id+'\','+ind+')">'
                     +'<h2>'+t1.team.name+'('+t1.team.parent+')</h2><span class="ui-li-count">'+marcadorIda+marcadorVuelta+'</span>'
                     +'<h2>'+t2.team.name+'('+t2.team.parent+')</h2>'
                     +((!isUnico)?'<p class="ui-li-aside"><strong>'+marcadorFinal+'</strong></p>':'')
@@ -313,6 +314,36 @@ function teamsCompetenciaforFase(){
             teams.push(x);
         }
     }    
+    var faseAnt=faseAnterior(ItmV('selFases'));
+    if(faseAnt!=null){
+        if(faseAnt.type=='FE'){
+            var i=0;
+            var lclasi=clasificadosArrayMethodByIdFase(faseAnt.id);
+            for(i in lclasi){
+                var x=lclasi[i];
+                var t=x.c.team;
+                var entity={fase:faseAnt,team:t,pk:faseAnt.id,pk2:faseAnt.type};
+                var k=0;
+                var count=0;
+                isExiste=false
+                var tl=unionTeamsBaseArray();
+                for(k in tl){
+                    var tm=tl[k].team;
+                    var fs=tl[k].fase;
+                    if(fs.id==faseAnt.id || fs.id==ItmV('selFases')){
+                        count++;
+                        if(t.abre==tm.abre){
+                            isExiste=true;
+                            break; 
+                        }
+                    }
+                }
+                if(!isExiste && count>0){
+                    teams.push(entity);
+                }
+            }
+        }
+    }
     return teams;
 }
 
