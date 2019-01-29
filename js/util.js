@@ -454,3 +454,18 @@ function findTeamForFixtureGenAux(list,idf){
     }
     return aux;
 }
+
+function convertConfFase(faseAnt){
+    if(faseAnt.trim()!=''){
+        var fase=faseAnt.split(';');
+        var concat='';
+        for(var i=0;i<fase.length;i++){
+            var f=fase[i].split(':');
+            concat+=(concat=='')?f[1]:':'+f[1];
+        }
+        return concat;
+    }else{
+        return '';
+    }
+
+}

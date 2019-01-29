@@ -40,6 +40,8 @@ function cargarBaseDatos(){
         loadTeamDataBase();
     }else if(tabla==='history'){
         loadHistoryDataBase();
+    }else if(tabla==='competencia'){
+        loadCompetenciaDataBase()
     }
 }
 
@@ -185,8 +187,12 @@ function sincronizarData(){
     var uri;
     
     if(ope==='POST'){
-        if(table=='teams') uri='saveTeam';
-        if(table=='history') uri='saveHistory';
+        if(table=='teams') uri='teams/';
+        if(table=='history') uri='historys/';
+        if(table=='plantilla') uri='plantillas/';
+        if(table=='competencia') uri='competencias/';
+        if(table=='competencia_team') uri='competencia_teams/';
+        if(table=='competencia_fixture') uri='competencia_fixtures/';
         readData(table,uri);
     }else{
 
@@ -213,7 +219,7 @@ function sendDataExport(dataArray,uri){
     var ip=ItmV('ipServer').trim();
     if(ip!=''){
         var json=JSON.stringify(dataArray);
-        var url=ip+'/apisoccerhistory/'+method_uri(uri);
+        var url=ip+'/apisoccerhistory/'+uri;
         var headers = new Headers();
         headers.append('Content-Type', 'application/json');
         headers.append('Accept', 'application/json');

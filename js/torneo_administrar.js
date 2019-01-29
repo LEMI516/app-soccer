@@ -106,6 +106,13 @@ function buildFixture(){
     if(torneo.plantilla.typeTorneo=='CGI'){
         faseFinal=torneo.plantilla.cff.split(':');
         isFaseGrupo=true;isFaseFinal=true;
+    }else if(torneo.plantilla.typeTorneo=='CE') {
+        faseFinal=torneo.plantilla.cff.split(':');
+        isFaseFinal=true;
+    }else if(torneo.plantilla.typeTorneo=='CGFP') {
+        faseFinal=torneo.plantilla.cff.split(':');
+        fasePrevia=torneo.plantilla.cfp.split(':');
+        isFaseFinal=true;isFaseGrupo=true;isFasePrevia=true;
     }
     if(torneo.plantilla.typeMatch=='LOCVIS') isUnico=false;
     if(isFaseFinal){
@@ -113,10 +120,11 @@ function buildFixture(){
             var id=parseInt(i)+1;
             var pkfase='F'+id;
             html2+=innerOption('F'+id,'FASE '+id);
-            fasesArray.push({id:'F'+id,pos:id,name:'FASE '+id,n:faseFinal[i],n2:0,type:'FE'});            
+            fasesArray.push({id:'F'+id,pos:id,name:'FASE '+id,n:faseFinal[i],n2:0,type:'FE'}); 
+                   
             j++;
             var n=parseInt(faseFinal[i]);
-            html+='<li data-role="list-divider">Final '+j+'<span class="ui-li-count">'+(n/2)+'</span></li>';
+            html+='<li data-role="list-divider">Ronda Final '+(i+1)+'<span class="ui-li-count">'+(n/2)+'</span></li>';
             for(k=0;k<(n/2);k++){
                 var fkfase='FE'+pkfase+(k+1);
                 var fixComp=findTeamForFixtureGenAux(teamsCompFixtureArray,fkfase);
@@ -177,6 +185,50 @@ function buildFixture(){
             }
         }
     }
+    if(isFasePrevia){
+        for(i=fasePrevia.length-1;i>=0;i--){
+            var id=parseInt(i)+1;
+            var pkfase='FP'+id;
+            html2+=innerOption('FP'+id,'FASE PREVIA '+id);
+            fasesArray.push({id:'FP'+id,pos:id,name:'FASE PREVIA '+id,n:fasePrevia[i],n2:0,type:'FE'});            
+            j++;
+            var n=parseInt(fasePrevia[i]);
+            html+='<li data-role="list-divider">Fase Previa '+(i+1)+'<span class="ui-li-count">'+(n/2)+'</span></li>';
+            for(k=0;k<(n/2);k++){
+                var fkfase='FE'+pkfase+(k+1);
+                var fixComp=findTeamForFixtureGenAux(teamsCompFixtureArray,fkfase);
+                if(fixComp.length>0){
+                    var t1=fixComp[0];
+                    var t2=fixComp[1];
+                    var marcadorIda='';
+                    var marcadorVuelta='';
+                    var marcadorFinal='';        
+                    var t1gl=parseInt(t1.fix.gl);
+                    var t1gv=parseInt(t1.fix.gv);
+                    var t2gl=parseInt(t2.fix.gl);
+                    var t2gv=parseInt(t2.fix.gv);
+                    if(!isUnico){
+                        marcadorIda=t1gl+'-'+t2gv;
+                        marcadorVuelta='<br>'+t2gl+'-'+t1gv;  
+                        marcadorFinal=(t1gl+t1gv)+'-'+(t2gl+t2gv);
+                    }else{
+                        marcadorIda=t1gl+'-'+t2gv;
+                    }        
+                    var ind=(isUnico)?1:0;                        
+                    html+='<li><a onclick="dialog_add_marcador(\''+t1.team.abre+'\',\''+t2.team.abre+'\',\''+t1.fix.id+'\',\''+t2.fix.id+'\','+ind+')">'
+                    +'<h2>'+t1.team.name+'('+t1.team.parent+')</h2><span class="ui-li-count">'+marcadorIda+marcadorVuelta+'</span>'
+                    +'<h2>'+t2.team.name+'('+t2.team.parent+')</h2>'
+                    +((!isUnico)?'<p class="ui-li-aside"><strong>'+marcadorFinal+'</strong></p>':'')
+                +'</a></li>';
+                }else{
+                    html+='<li><a>'
+                    +'<h2> - - - </h2><span class="ui-li-count"> - </span>'
+                    +'<h2> - - - </h2>'
+                +'</a></li>';
+                }
+            }
+        }
+    }    
     inyHtml('fixture',html); 
     inyHtml('selFases',html2);
     $("#selFases").prev().html('FASE...');
