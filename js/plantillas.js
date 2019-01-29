@@ -94,6 +94,8 @@ function addPlantilla(){
     var elements='confederation|typeTeam|typeTorneo|typeMatch|cantTeam|namePlanti';
     if(typeTorneo=='CGI') elements+='|cantGru|cantTeamxGru|cantClaxGru';
     else if(typeTorneo=='CGFP') elements+='|cantGru|cantTeamxGru|cantClaxGru';
+    
+    
 
     var isValid=isValidValues(elements);
     if(isValid){

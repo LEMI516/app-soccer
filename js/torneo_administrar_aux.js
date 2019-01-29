@@ -24,7 +24,7 @@ function dialog_add_marcador(abre1,abre2,idfix1,idfix2,isUnico){
         Itm('mar2').setAttribute("placeholder","MARCADOR VUELTA");
         $('#mar2').show();
     }
-    Itm('btnSaveDialogAddEquipoMarcador').setAttribute("onclick", "updateCompetenciaFixtureMarcador('"+idfix1+"','"+idfix2+"')"); 
+    Itm('btnSaveDialogAddEquipoMarcador').setAttribute("onclick", "updateCompetenciaFixtureMarcador('"+idfix1+"','"+idfix2+"',"+isUnico+")"); 
     dialog('dialog_add_marcador');
 }
 
@@ -53,7 +53,7 @@ function updateCompetenciaFixture(id) {
     };
 }
 
-function updateCompetenciaFixtureMarcador(id1,id2) {
+function updateCompetenciaFixtureMarcador(id1,id2,isUnico) {
     id1=parseInt(id1);
     id2=parseInt(id2);
     var mar1=ItmV('mar1');
@@ -63,7 +63,7 @@ function updateCompetenciaFixtureMarcador(id1,id2) {
     var gl1=parseInt(m1[0]);
     var gv2=parseInt(m1[1]);
     var gv1=parseInt(m2[0]);
-    var gl2=parseInt(m2[1]);    
+    var gl2=parseInt(m2[1]);   
     var objectStore = db.transaction(["competencia_fixture"],"readwrite").objectStore("competencia_fixture");
     var index =  objectStore.index('id').openCursor(IDBKeyRange.only(id1));
     index.onsuccess = function(event) {

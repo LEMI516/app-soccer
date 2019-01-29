@@ -135,7 +135,7 @@ function buildFixture(){
                         marcadorVuelta='<br>'+t2gl+'-'+t1gv;  
                         marcadorFinal=(t1gl+t1gv)+'-'+(t2gl+t2gv);
                     }else{
-                        marcadorIda=t1gl+'-'+t2gl;
+                        marcadorIda=t1gl+'-'+t2gv;
                     }        
                     var ind=(isUnico)?1:0;                        
                     html+='<li><a onclick="dialog_add_marcador(\''+t1.team.abre+'\',\''+t2.team.abre+'\',\''+t1.fix.id+'\',\''+t2.fix.id+'\','+ind+')">'
