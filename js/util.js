@@ -210,6 +210,8 @@ function findTeamsBy(param,value,list){
             newArray.push(t);
         }else if(param==='type_conf' && t.type==value[0] && t.conf==value[1]){
             newArray.push(t);
+        }else if(param==='aux' && parseInt(t.aux)==parseInt(value[0])){
+            newArray.push(t);
         }
     }
     return newArray;
@@ -468,4 +470,48 @@ function convertConfFase(faseAnt){
         return '';
     }
 
+}
+
+function getCompetenciasFixtureJson(lista){
+    var aux=new Array();
+    for(var i=0;i<lista.length;i++){
+        var obj=lista[i];
+        var isExiste=false;
+        for(var j=0;j<aux.length;j++){
+            var obj2=aux[j];
+            if(obj.ID_COMPETENCIA==obj2.ID_COMPETENCIA){ isExiste=true; break;}
+        }
+        if(!isExiste){
+            aux.push(obj);
+        }
+    }
+    return aux;
+}
+
+function getTeamsCompetenciasJson(idcomp,lista){
+    var aux=new Array(),aux2=new Array();
+    for(var i=0;i<lista.length;i++){
+        var obj=lista[i];
+        if(obj.ID_COMPETENCIA==idcomp){ 
+            if(obj.NOM_FASE=='FG'){
+                aux.push({id:obj.ID_EQUIPO_I});
+            }else if(obj.NOM_FASE=='FF' || obj.NOM_FASE=='FP'){
+                aux.push({id:obj.ID_EQUIPO_I});
+                aux.push({id:obj.ID_EQUIPO_II});
+            }
+        }
+    }
+
+    for(var i=0;i<aux.length;i++){
+        var obj=aux[i];
+        var isExiste=false;
+        for(var j=0;j<aux2.length;j++){
+            var obj2=aux2[j];
+            if(parseInt(obj.id)==parseInt(obj2.id)){ isExiste=true; break;}
+        }
+        if(!isExiste){
+            if(parseInt(obj.id)!=-1) aux.push(obj);
+        }
+    }    
+    return aux2;
 }

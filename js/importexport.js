@@ -42,6 +42,8 @@ function cargarBaseDatos(){
         loadHistoryDataBase();
     }else if(tabla==='competencia'){
         loadCompetenciaDataBase()
+    }else if(tabla==='competencia_fixture'){
+        loadCompetenciaFixtureDataBase();
     }
 }
 

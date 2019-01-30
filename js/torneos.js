@@ -104,7 +104,7 @@ function add(nameobjectStore,objectStore,name_funcion) {
             if(t.competencia===type || type==='ALL'){
                 html+='<li >'
                         +'<a onclick="onclickTorneoAdm('+pk+')" href="#">'+t.name+' '+t.edicion+'°</a>'
-                        +'<a data-icon="delete" onclick="dialogEliminarTorneo('+t.id+',\''+t.name+'\')" href="#"></a>'
+                        +'<a data-icon="delete" onclick="dialogEliminarTorneo('+t.id+',\''+t.name+'\',\''+t.pk+'\')" href="#"></a>'
                       +'</li>';                 
             }
         }        
@@ -113,25 +113,53 @@ function add(nameobjectStore,objectStore,name_funcion) {
     $("#torneos").listview('refresh');
 }
 
-function dialogEliminarTorneo(id,name){
-    dialog_confirm('¿Esta seguro que desea eliminar el torneo '+name+' ?','eliminarTorneo('+id+')');
+function dialogEliminarTorneo(id,name,pk){
+    dialog_confirm('¿Esta seguro que desea eliminar el torneo '+name+' ?','eliminarTorneo('+id+',\''+pk+'\')');
 }
 
-function eliminarTorneo(id){
-    deleteTorneo('competencia',id,'');
+function eliminarTorneo(id,pk){
+    deleteTorneo('competencia',id,pk,'');
 }
 
-function deleteTorneo(nameobjectStore,id,name_funcion){
-    var request = db.transaction([nameobjectStore], "readwrite").objectStore(nameobjectStore).delete(id);
-    request.onsuccess = function(event) {
-       Tooltip('Operación realizada exitosamente');
-       if(name_funcion!= null && name_funcion!= undefined && name_funcion!= '') eval(name_funcion);
-       readTorneos();
+function deleteTorneo(nameobjectStore,id,pk,name_funcion){
+    deleteCompetenciaTeam(pk,id);
+}
+
+function deleteCompetenciaTeam(pk,id) {
+    var objectStore = db.transaction(["competencia_team"]).objectStore("competencia_team");
+    var index=objectStore.index('id_comp').openCursor(IDBKeyRange.only(pk));
+    teamsCompetenciaArray=new Array();
+    index.onsuccess = function(event) {
+        var cursor = event.target.result;
+        if (cursor) {
+            cursor.delete();
+            cursor.continue();
+        }else{
+            deleteCompetenciaFixture(pk,id); 
+        }
     };
-    request.onerror = function(event) {
-        Tooltip('Ocurrio un error en la base de datos');
-    }
 }
+
+function deleteCompetenciaFixture(pk,id) {
+    var objectStore = db.transaction(["competencia_fixture"]).objectStore("competencia_fixture");
+    var index =  objectStore.index('id_comp').openCursor(IDBKeyRange.only(pk));
+    teamsCompFixtureArray=new Array();
+    index.onsuccess = function(event) {
+        var cursor = event.target.result;
+        if (cursor) {
+            cursor.delete();cursor.continue();
+        }else{
+            var request = db.transaction(['competencia'], "readwrite").objectStore('competencia').delete(id);
+            request.onsuccess = function(event) {
+               Tooltip('Operación realizada exitosamente');
+               readTorneos();
+            };
+            request.onerror = function(event) {
+                Tooltip('Ocurrio un error en la base de datos');
+            }            
+        }
+    };
+ }
 
 function onclickTorneoAdm(id){
     var t=findById(torneosArray,id);

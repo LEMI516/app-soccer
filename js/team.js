@@ -5,6 +5,7 @@ var defaultSelected='';
 $( document ).ready(function() {
     innerSelectSimple('confederationTeam',confederaciones);
     innerSelectSimple('confederationTeamUpdate',confederaciones);
+    llenarListaColores();
     SQL_DATA_BASE_UPLOADED();
 });
 
@@ -60,13 +61,13 @@ function readTeams() {
 
  function addTeam(){
     var type=$('#typeTeam').val(); 
-    var elements=(type==='CLUB')?'confederationTeam|typeTeam|parentTeam|name|abreviatura':'confederationTeam|typeTeam|name|abreviatura';
+    var elements=(type==='CLUB')?'confederationTeam|typeTeam|parentTeam|name|abreviatura|color':'confederationTeam|typeTeam|name|abreviatura|color';
     var isValid=isValidValues(elements);
     if(isValid){
         var v=values(elements);
         var team;
-        if(type==='CLUB') team={ conf:v[0],type:v[1],parent:v[2],name:v[3].toUpperCase(),abre:v[4].toUpperCase(),aux:'' };
-        else team={ conf:v[0],type:v[1],parent:v[0],name:v[2].toUpperCase(),abre:v[3].toUpperCase(),aux:'' };
+        if(type==='CLUB') team={ conf:v[0],type:v[1],parent:v[2],name:v[3].toUpperCase(),abre:v[4].toUpperCase(),aux:0,color:v[5] };
+        else team={ conf:v[0],type:v[1],parent:v[0],name:v[2].toUpperCase(),abre:v[3].toUpperCase(),aux:0,color:v[4] };
         defaultSelected=v[2];
         add("teams",team,'cleanValues()');
     }else{
@@ -75,7 +76,7 @@ function readTeams() {
 }
 
 function cleanValues(){
-    cleanFields('name|abreviatura');
+    cleanFields('name|abreviatura|colorSelect|color');
 }
 
 function add(nameobjectStore,objectStore,name_funcion) {
@@ -112,7 +113,7 @@ function searchGeneral(opc,params){
         if(opc==='0'){
             if(t.type===params[0] || params[0]==='ALL'){
                 html+='<li >'
-                        +'<a onclick="updateTeam(\''+t.abre+'\')" href="#"><h2>'+(k+1)+'.'+t.name+'</h2><p>'+t.abre+' - '+t.parent+'</p></a>'
+                        +'<a onclick="updateTeam(\''+t.abre+'\')" href="#"><h2>'+(k+1)+'.'+logo(t.color)+t.name+'</h2><p>'+t.abre+' - '+t.parent+'</p></a>'
                         +'<a data-icon="delete" onclick="dialogEliminarTeam('+t.id+',\''+t.name+'\')" href="#"></a>'
                       +'</li>';
                 k++;
@@ -123,7 +124,7 @@ function searchGeneral(opc,params){
             var name=t.name.toLowerCase();
             if(name.indexOf(params[0].toLowerCase())>=0 && (t.type===params[1] || params[1]==='ALL')){
                 html+='<li >'
-                        +'<a onclick="updateTeam(\''+t.abre+'\')" href="#"><h2>'+(k+1)+'.'+t.name+'</h2><p>'+t.abre+' - '+t.parent+'</p></a>'
+                        +'<a onclick="updateTeam(\''+t.abre+'\')" href="#"><h2>'+(k+1)+'.'+logo(t.color)+t.name+'</h2><p>'+t.abre+' - '+t.parent+'</p></a>'
                         +'<a data-icon="delete" onclick="dialogEliminarTeam('+t.id+',\''+t.name+'\')" href="#"></a>'
                       +'</li>';                
                 k++;
@@ -164,6 +165,7 @@ function updateTeam(abre){
     Itm('hddTypeTeamUpdate').value=t.type;
     Itm('hddAbreviaturaActually').value=t.abre;
     Itm('confederationTeamUpdate').value=t.conf;
+    Itm('colorUpdate').value=t.color;
     $("#confederationTeamUpdate").prev().html(t.conf);
     Itm('nameUpdate').value=t.name;
     Itm('abreviaturaUpdate').value=t.abre;
@@ -209,7 +211,9 @@ function updateTeamBase() {
     var parent=ItmV('parentTeamUpdate');
     var name=ItmV('nameUpdate');
     var abre=ItmV('abreviaturaUpdate');
+    var abre=ItmV('abreviaturaUpdate');
     var abraAnt=ItmV('hddAbreviaturaActually');
+    var color=ItmV('colorUpdate');
     var elements=(type==='CLUB')?'confederationTeamUpdate|parentTeamUpdate|nameUpdate|abreviaturaUpdate':'confederationTeamUpdate|nameUpdate|abreviaturaUpdate';
     var isValid=isValidValues(elements);
     var team=findTeamByAbre(abraAnt,teamsArray);
@@ -224,12 +228,14 @@ function updateTeamBase() {
                     object.conf=conf;
                     object.name=name.toUpperCase();
                     object.abre=abre.toUpperCase();
+                    object.color=color;
                     object.parent=conf;
                 }else{
                     object.conf=conf;
                     object.name=name.toUpperCase();
                     object.abre=abre.toUpperCase();
                     object.parent=parent;
+                    object.color=color;
                 }
                 var res = cursor.update(object);
                 cursor.continue();
@@ -242,5 +248,25 @@ function updateTeamBase() {
     }else{
         Tooltip('Debe ingresar todos los datos');
 
+    }
+}
+
+function llenarListaColores(){
+    var colores=colours();
+    var html='';
+    html='<option value="" >Defecto...</option>';
+    for(var i=0;i<colores.length;i++){
+        html+='<option value="'+colores[i]+'" style="background-color:'+colores[i]+'" >'+colores[i]+'</option>';
+    }
+    Itm('colorSelect').innerHTML=html; 
+}
+
+function onchangeColor(){
+    var valcolor=ItmV('colorSelect');
+    var obj=Itm('color');
+    if(valcolor.trim()!=''){
+        obj.value=(obj.value.trim()=='')?valcolor:obj.value.trim()+':'+valcolor
+    }else{
+        obj.value='';
     }
 }

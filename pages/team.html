@@ -54,6 +54,8 @@
                 </select>
                 <input type="text" style="text-transform:uppercase" id="name" placeholder="Nombre" class="inp_txt"/>
                 <input type="text" style="text-transform:uppercase" id="abreviatura" class="inp_txt"  placeholder="Abreviatura"/>
+                <select id="colorSelect" data-theme="b" onchange="onchangeColor()"></select>
+                <input type="text" style="text-transform:uppercase" id="color" class="inp_txt"  placeholder="color"/>
                 <select id="parentTeam" style="display: " data-theme="b" class="combo" onchange=""></select>
                 <div class="div_btn" ><button onclick="addTeam()" >AGREGAR</button></div>
         </div>   
@@ -73,6 +75,7 @@
                     <select id="confederationTeamUpdate" data-theme="b" class="combo" onchange="loadParentsUpdate();"></select>
                     <input type="text" style="text-transform:uppercase" id="nameUpdate" placeholder="Nombre" />
                     <input type="text" style="text-transform:uppercase" id="abreviaturaUpdate" placeholder="Abreviatura"/>
+                    <input type="text" style="text-transform:uppercase" id="colorUpdate" placeholder="Color"/>
                     <select id="parentTeamUpdate" style="display: " data-theme="b" class="combo" onchange=""></select>
                     <a href="#" name="btnClosedDialogApp" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-rel="back">Cancelar</a>
                     <a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" onclick="updateTeamBase()" data-transition="flow">Actualizar</a>
