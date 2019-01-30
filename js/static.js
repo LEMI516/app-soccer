@@ -83,58 +83,64 @@ function colours(){
 
 function logo(color){
     var html='';
-    if(color.trim()!=''){
-        var clr=color.split(':');
-        var tam=clr.length;
-        if(tam==1){
-            html='<div '
-            +'style="'
-            +'height: 13px;'
-            +'width: 13px;'
-            +'border-radius: 50%;'
-            +'background: '+clr[0]+';'
-            +'border: solid 0.04em black;'
-            +'display: inline-block;'
-            +'margin: 0px 3px 0px 3px;'
-            +'padding: 0;'
-            +'" >'
-            +'</div>';
-        }else if(tam==2){
-            html='<div '
-            +'style="'
-            +'height: 13px;'
-            +'width: 13px;  '
-            +'margin: 0px 3px 0px 3px ;'
-            +'padding: 0;'
-            +'display: inline-block;'      
-            +'border-radius: 50%;'
-            +'background: '+clr[0]+';' 
-            +'border: solid 0.04em black;' 
-            +'background: -moz-linear-gradient(top, '+clr[0]+' 0%, '+clr[0]+' 50%, '+clr[1]+' 51%, '+clr[1]+' 100%); '
-            +'background: -webkit-linear-gradient(top, '+clr[0]+' 0%,'+clr[0]+' 50%,'+clr[1]+' 51%,'+clr[1]+' 100%); '
-            +'background: linear-gradient(to bottom, '+clr[0]+' 0%,'+clr[0]+' 50%,'+clr[1]+' 51%,'+clr[1]+' 100%); '
-            +'filter: progid:DXImageTransform.Microsoft.gradient( startColorstr=\''+clr[0]+'\', endColorstr=\''+clr[1]+'\',GradientType=0 ); '            
-            +'" >'
-            +'</div>';
-        }else if(tam>2){
-            html='<div '
-            +'style="'
-            +'height: 13px;'
-            +'width: 13px;  '
-            +'margin: 0px 3px 0px 3px ;'
-            +'padding: 0;'
-            +'display: inline-block;'      
-            +'border-radius: 50%;'
-            +'background: '+clr[0]+';' 
-            +'border: solid 0.04em black;' 
-            +'background: -moz-linear-gradient(top, '+clr[0]+' 35%, '+clr[1]+' 36%, '+clr[1]+' 66%, '+clr[2]+' 67%);'
-            +'background: -webkit-linear-gradient(top, '+clr[0]+' 35%,'+clr[1]+' 36%,'+clr[1]+' 66%,'+clr[2]+' 67%); '
-            +'background: linear-gradient(to bottom, '+clr[0]+' 35%,'+clr[1]+' 36%,'+clr[1]+' 66%,'+clr[2]+' 67%); '
-            +'filter: progid:DXImageTransform.Microsoft.gradient( startColorstr=\''+clr[0]+'\', endColorstr=\''+clr[2]+'\',GradientType=0 );'             
-            +'" >'
-            +'</div>';
-        }
+    if(color.trim()=='') color='V;#C9C6BD';
 
+    var confcolor=color.split(';');
+    var clr=confcolor[1].split(':');
+    var tam=clr.length;
+    var p1,p2,p3;
+    if(confcolor[0]=='h' || confcolor[0]=='H'){
+        p1='left';p2='right';p3='1';
+    }else{
+        p1='top';p2='bottom';p3='0';
+    }
+    if(tam==1){
+        html='<div '
+        +'style="'
+        +'height: 13px;'
+        +'width: 13px;'
+        +'border-radius: 50%;'
+        +'background: '+clr[0]+';'
+        +'border: solid 0.04em black;'
+        +'display: inline-block;'
+        +'margin: 0px 3px 0px 3px;'
+        +'padding: 0;'
+        +'" >'
+        +'</div>';
+    }else if(tam==2){
+        html='<div '
+        +'style="'
+        +'height: 13px;'
+        +'width: 13px;  '
+        +'margin: 0px 3px 0px 3px ;'
+        +'padding: 0;'
+        +'display: inline-block;'      
+        +'border-radius: 50%;'
+        +'background: '+clr[0]+';' 
+        +'border: solid 0.04em black;' 
+        +'background: -moz-linear-gradient('+p1+', '+clr[0]+' 0%, '+clr[0]+' 50%, '+clr[1]+' 51%, '+clr[1]+' 100%); '
+        +'background: -webkit-linear-gradient('+p1+', '+clr[0]+' 0%,'+clr[0]+' 50%,'+clr[1]+' 51%,'+clr[1]+' 100%); '
+        +'background: linear-gradient(to '+p2+', '+clr[0]+' 0%,'+clr[0]+' 50%,'+clr[1]+' 51%,'+clr[1]+' 100%); '
+        +'filter: progid:DXImageTransform.Microsoft.gradient( startColorstr=\''+clr[0]+'\', endColorstr=\''+clr[1]+'\',GradientType='+p3+' ); '            
+        +'" >'
+        +'</div>';
+    }else if(tam>2){
+        html='<div '
+        +'style="'
+        +'height: 13px;'
+        +'width: 13px;  '
+        +'margin: 0px 3px 0px 3px ;'
+        +'padding: 0;'
+        +'display: inline-block;'      
+        +'border-radius: 50%;'
+        +'background: '+clr[0]+';' 
+        +'border: solid 0.04em black;' 
+        +'background: -moz-linear-gradient('+p1+', '+clr[0]+' 35%, '+clr[1]+' 36%, '+clr[1]+' 66%, '+clr[2]+' 67%);'
+        +'background: -webkit-linear-gradient('+p1+', '+clr[0]+' 35%,'+clr[1]+' 36%,'+clr[1]+' 66%,'+clr[2]+' 67%); '
+        +'background: linear-gradient(to '+p2+', '+clr[0]+' 35%,'+clr[1]+' 36%,'+clr[1]+' 66%,'+clr[2]+' 67%); '
+        +'filter: progid:DXImageTransform.Microsoft.gradient( startColorstr=\''+clr[0]+'\', endColorstr=\''+clr[2]+'\',GradientType='+p3+' );'             
+        +'" >'
+        +'</div>';
     }
     return html;
 }

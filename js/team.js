@@ -259,13 +259,22 @@ function llenarListaColores(){
         html+='<option value="'+colores[i]+'" style="background-color:'+colores[i]+'" >'+colores[i]+'</option>';
     }
     Itm('colorSelect').innerHTML=html; 
+    Itm('colorSelectUpdate').innerHTML=html; 
 }
 
-function onchangeColor(){
-    var valcolor=ItmV('colorSelect');
-    var obj=Itm('color');
+function onchangeColor(id1,id2){
+    var valcolor=ItmV(id1);
+    var itms=Itms('radio-choice-b');
+    var type;
+    for(var i=0;i<itms.length;i++){
+        if(itms[i].checked){
+            type=itms[i].value;
+            break;
+        }
+    }
+    var obj=Itm(id2);
     if(valcolor.trim()!=''){
-        obj.value=(obj.value.trim()=='')?valcolor:obj.value.trim()+':'+valcolor
+        obj.value=(obj.value.trim()=='')?type+';'+valcolor:obj.value.trim()+':'+valcolor
     }else{
         obj.value='';
     }

@@ -40,10 +40,6 @@ function cargarBaseDatos(){
         loadTeamDataBase();
     }else if(tabla==='history'){
         loadHistoryDataBase();
-    }else if(tabla==='competencia'){
-        loadCompetenciaDataBase()
-    }else if(tabla==='competencia_fixture'){
-        loadCompetenciaFixtureDataBase();
     }
 }
 
@@ -87,11 +83,12 @@ function loadTeamDataBase(){
             count++;
             var porcentaje=parseFloat((100*count)/tam);
             var resultado = Math.round(porcentaje*Math.pow(10,2))/Math.pow(10,2);
-            var team={ conf:conf,type:type,parent:parent,name:t.nombre.toUpperCase(),abre:abreviatura,aux:aux };
+            var team={ conf:conf,type:type,parent:parent,name:t.nombre.toUpperCase(),abre:abreviatura,aux:aux,color:''};
             add("teams",team,'',t.nombre.toUpperCase());
             $(barLoadChild).css({"width": porcentaje+"%"});
             $(barLoadChild).html(resultado+"%");
         }
+        Tooltip('Total procesados '+count+'/'+tam);
         Itm('container_json_import').value='';
         readTeams();
     }
@@ -178,6 +175,7 @@ function add(nameobjectStore,objectStore,name_funcion,msj) {
             $(barLoadChild).css({"width": porcentaje+"%"});
             $(barLoadChild).html(resultado+"%");
         }
+        Tooltip('Total procesados '+count+'/'+tam);
         Itm('container_json_import').value='';
         if(noencontrados>0) Tooltip('Total '+noencontrados+' no encontrados');
     }

@@ -46,12 +46,7 @@
             <div id="fragment-3">
                 <div data-role="content">
                     <select id="selFases" class="combo" data-theme="b" onchange="initFase('I')" ></select>
-                    <fieldset data-role="controlgroup" data-theme="b" data-type="horizontal" data-mini="true">
-                        <input type="radio" name="radio-choice-b" id="radio-choice-c" value="list" checked="checked">
-                        <label for="radio-choice-c">Manual</label>
-                        <input type="radio" name="radio-choice-b" id="radio-choice-d" value="grid">
-                        <label for="radio-choice-d">Automatico</label>
-                    </fieldset>                    
+                    <label id="innerAleatorioSorteo" ></label>
                     <button class="button_dialog" onclick="guardarConfiguraciondeFase()" >GUARDAR</button>
                     <ul id="contentFase" data-theme="b" data-role="listview" data-inset="true" data-divider-theme="b"></ul>
                 </div>

@@ -387,7 +387,7 @@ function orderTeamsHistorialByCompetencia(listTeams){
 function scaleTxt(texto){
     var is=false;
     var scale=0;
-    if(texto.length>25){
+    if(texto.length>=24){
         scale=-2;
         is=true;
     }else if(texto.length>20){
@@ -514,4 +514,21 @@ function getTeamsCompetenciasJson(idcomp,lista){
         }
     }    
     return aux2;
+}
+
+function shuffle(n) {
+    var a=new Array();
+    for(var l=1;l<=n;l++) a.push(l);
+
+    var j, x, i;
+    for (i = a.length - 1; i > 0; i--) {
+        j = Math.floor(Math.random() * (i + 1));
+        x = a[i];
+        a[i] = a[j];
+        a[j] = x;
+    }
+    var result='';
+    for(var l=0;l<a.length;l++)
+        result+=(result=='')?a[l]:'-'+a[l];
+    return result;
 }

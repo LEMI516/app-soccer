@@ -117,8 +117,8 @@ function buildListHistory(){
         for(var i=0;i<auxHistoricoTeamsArray.length;i++){
             var his=auxHistoricoTeamsArray[i];
             html+='<div >'
-                +'<h3>Edicion '+j+'</h3>'
-                +'<h1>'+his.cam.name+' ('+his.cam.parent+')<img src="../img/icon_trofeo.png" class="img_tro" /></h1>'
+                +'<h3>Edicion '+j+' </h3>'
+                +'<h1>'+logo(his.cam.color)+his.cam.name+' ('+his.cam.parent+')<img src="../img/icon_trofeo.png" class="img_tro" /></h1>'
                 +'<h2>'+his.sub.name+'('+his.sub.parent+')</h2>'
                 +'<h4>'+his.ter.name+'('+his.ter.parent+') - '+his.cuar.name+'('+his.cuar.parent+')</h4>'
             +'</div>';
