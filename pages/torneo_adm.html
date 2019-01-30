@@ -23,7 +23,7 @@
         <div data-role="header" data-transition="none" data-position="fixed" style="position: fixed" >
             <a href="#" onclick="location.href='torneos.html'" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left ui-icon-carat-l">BACK</a>
             <h1 id="h1PageTorneoAdmon">Administrar Torneo</h1>
-            <a href="#" onclick="dialog('dialog_agregar_equipo');" class="ui-btn-right ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-right ui-icon-plus">AGR</a>
+            <a href="#" onclick="dialog_agrea_equipo_competencia();" class="ui-btn-right ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-right ui-icon-plus">AGR</a>
         </div> 
         <div data-role="tabs" style="padding: 0">
             <div data-role="navbar" data-iconpos="top">
@@ -65,7 +65,7 @@
             <div role="main" class="ui-content">
                 <label><b>AGREGAR EQUIPO</b></label><br>
                 <select id="txtypeTeam" class="combo" onchange="onloadAddTeam()" >
-                    <option value="CLUB">CLUB</option>
+                   <option value="CLUB">CLUB</option>
                     <option value="SEL">SELECCION</option>
                 </select>
                 <select id="parent" class="combo" onchange="serachTeams(1)" ></select>

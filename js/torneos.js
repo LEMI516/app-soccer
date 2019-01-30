@@ -126,7 +126,7 @@ function deleteTorneo(nameobjectStore,id,pk,name_funcion){
 }
 
 function deleteCompetenciaTeam(pk,id) {
-    var objectStore = db.transaction(["competencia_team"]).objectStore("competencia_team");
+    var objectStore = db.transaction(["competencia_team"],"readwrite").objectStore("competencia_team");
     var index=objectStore.index('id_comp').openCursor(IDBKeyRange.only(pk));
     teamsCompetenciaArray=new Array();
     index.onsuccess = function(event) {
@@ -141,7 +141,7 @@ function deleteCompetenciaTeam(pk,id) {
 }
 
 function deleteCompetenciaFixture(pk,id) {
-    var objectStore = db.transaction(["competencia_fixture"]).objectStore("competencia_fixture");
+    var objectStore = db.transaction(["competencia_fixture"],"readwrite").objectStore("competencia_fixture");
     var index =  objectStore.index('id_comp').openCursor(IDBKeyRange.only(pk));
     teamsCompFixtureArray=new Array();
     index.onsuccess = function(event) {

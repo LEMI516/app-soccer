@@ -17,8 +17,10 @@ $( document ).ready(function() {
 function onloadAddTeam(){
     var txtypeTeam=ItmV('txtypeTeam');
     if(txtypeTeam==='CLUB'){
+        $('#parent').parent().show();
         $('#parent').show();
         var teamSel=findTeamsBy('type_conf',['SEL',torneo.plantilla.confederation],teamsArray);
+        teamSel=filterTeamsSelectionisHaveClub(teamSel,teamsArray);
         var html='',abrefault='';
         var l=0;
         for(l in teamSel){
@@ -30,7 +32,7 @@ function onloadAddTeam(){
         $("#parent").prev().html(abrefault);
         serachTeams(1);
     }else{
-        $('#parent').hide();
+        $('#parent').parent().hide();
         serachTeams(2);
     }
  }
@@ -52,7 +54,7 @@ function onloadAddTeam(){
                     +'</li>';                 
             }
         }else if(caso===2){
-            if(t.type===txtypeTeam && t.parent===torneo.plantilla.confederation){
+            if(t.type===txtypeTeam && (t.parent===torneo.plantilla.confederation || torneo.plantilla.confederation=='MUN')){
                 html+='<li >'
                         +'<a data-icon="plus" onclick="agregar_equipo(\''+t.abre+'\')" href="#"><font '+cls+' >'+t.name+'</font></a>'
                     +'</li>'; 
@@ -486,4 +488,11 @@ function loadTeamBaseArray(){
         entity={fase:ent.fix.fase,team:ent.team,pk:ent.fix.pkf,pk2:ent.fix.fk};
         loadteamsBaseArrayFase.push(entity);        
     }
+}
+
+function dialog_agrea_equipo_competencia(){
+    Itm('txtypeTeam').value=torneo.plantilla.typeTeam;
+    $("#txtypeTeam").prev().html((torneo.plantilla.typeTeam=='SEL')?'SELECCION':'CLUB');
+    onloadAddTeam();
+    dialog('dialog_agregar_equipo');
 }

@@ -206,9 +206,9 @@ function findTeamsBy(param,value,list){
             newArray.push(t);
         }else if(param==='type' && t.type==value[0]){
             newArray.push(t);
-        }else if(param==='parent' && t.parent==value[0]){
+        }else if(param==="parent" && t.parent==value[0]){
             newArray.push(t);
-        }else if(param==='type_conf' && t.type==value[0] && t.conf==value[1]){
+        }else if(param==='type_conf' && t.type==value[0] && (t.conf==value[1] || value[1]=='MUN')){
             newArray.push(t);
         }else if(param==='aux' && parseInt(t.aux)==parseInt(value[0])){
             newArray.push(t);
@@ -531,4 +531,17 @@ function shuffle(n) {
     for(var l=0;l<a.length;l++)
         result+=(result=='')?a[l]:'-'+a[l];
     return result;
+}
+
+function filterTeamsSelectionisHaveClub(listBase,teamsArray){
+    var aux=new Array();
+    var i=0;
+    for(i in listBase){
+        var t=listBase[i];
+        var list=findTeamsBy('parent',[t.abre],teamsArray);
+        if(list.length>0){
+            aux.push(t);
+        }
+    }
+    return aux;
 }
