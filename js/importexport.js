@@ -188,14 +188,25 @@ function sincronizarData(){
     
     if(ope==='POST'){
         if(table=='teams') uri='teams/';
-        if(table=='history') uri='historys/';
-        if(table=='plantilla') uri='plantillas/';
-        if(table=='competencia') uri='competencias/';
-        if(table=='competencia_team') uri='competencia_teams/';
-        if(table=='competencia_fixture') uri='competencia_fixtures/';
+        else if(table=='history') uri='historys/';
+        else if(table=='plantilla') uri='plantillas/';
+        else if(table=='competencia') uri='competencias/';
+        else if(table=='competencia_team') uri='competencia_teams/';
+        else if(table=='competencia_fixture') uri='competencia_fixtures/';
+        else{
+            Tooltip('Operación no valida'); 
+            return;
+        }
         readData(table,uri);
     }else{
-
+        if(table=='teams') uri='allteams/';
+        else if(table=='history') uri='allhistorys/';
+        else if(table=='plantilla') uri='allplantillas/';
+        else{
+            Tooltip('Operación no valida'); 
+            return;
+        }
+        receivedData(uri,table);
     }
 }
 
@@ -240,8 +251,12 @@ function sendDataExport(dataArray,uri){
                 },
                 success: function (data) {
                     stop_animate_bar_laod();
-                    console.log(data);
-                    Tooltip('Proceso realizado exitosamente');
+                    if(data.result){
+                        Tooltip('Proceso realizado exitosamente');
+                    }else{
+                        Tooltip('Error al enviar datos, causa:'+data.msg);
+                    }
+                    //console.log(data);
                 },
                 error : function(data) { 
                     stop_animate_bar_laod();
@@ -253,16 +268,45 @@ function sendDataExport(dataArray,uri){
             Tooltip('Ocurrio un error al sincronizar datos, causa:'+error);
             stop_animate_bar_laod();
         }
-        /*$.ajax({
-            dataType: 'json',
-            xhrFields: {withCredentials: true},
-            async: false,
-            data: json,
-            url: url
-        }).then(function (data) {
+    }
+}
+
+function receivedData(uri,type){
+    var ip=ItmV('ipServer').trim();
+    if(ip!=''){
+        var url=ip+'/apisoccerhistory/'+uri;
+        var headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        headers.append('Accept', 'application/json');
+        headers.append('Access-Control-Allow-Origin', '*');
+        headers.append('Access-Control-Allow-Credentials', 'false');
+        headers.append('Access-Control-Allow-Methods','GET');
+
+        try {
+            $.ajax({
+                type: 'GET',
+                headers: headers,
+                dataType: 'json',
+                url: url,
+                beforeSend: function () {
+                    funAnimateVar=setInterval(animate_bar_load, 100); 
+                },
+                success: function (data) {
+                    onloadEntityDataBase(type,data)
+                    stop_animate_bar_laod();
+                    //console.log(data);
+                    //Tooltip('Proceso realizado exitosamente');
+                },
+                error : function(data) { 
+                    stop_animate_bar_laod();
+                    console.log(data);
+                    Tooltip('Ocurrio un error al sincronizar datos');
+                } 
+            });            
+        } catch (error) {
+            Tooltip('Ocurrio un error al sincronizar datos, causa:'+error);
             stop_animate_bar_laod();
-            console.log(response);
-        });*/
+        }
     }
 }
 
