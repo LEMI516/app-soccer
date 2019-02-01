@@ -122,7 +122,8 @@ function searchGeneral(opc,params){
         //OPCION 1 - BUSCAR POR TEXTO
         else if(opc==='1'){
             var name=t.name.toLowerCase();
-            if(name.indexOf(params[0].toLowerCase())>=0 && (t.type===params[1] || params[1]==='ALL')){
+            var abre=t.abre.toLowerCase();
+            if((name.indexOf(params[0].toLowerCase())>=0 || abre.indexOf(params[0].toLowerCase())>=0) && (t.type===params[1] || params[1]==='ALL')){
                 html+='<li >'
                         +'<a onclick="updateTeam(\''+t.abre+'\')" href="#"><h2>'+(k+1)+'.'+logo(t.color)+t.name+'</h2><p>'+t.abre+' - '+t.parent+'</p></a>'
                         +'<a data-icon="delete" onclick="dialogEliminarTeam('+t.id+',\''+t.name+'\')" href="#"></a>'
@@ -166,7 +167,9 @@ function updateTeam(abre){
     Itm('hddAbreviaturaActually').value=t.abre;
     Itm('confederationTeamUpdate').value=t.conf;
     Itm('colorUpdate').value=t.color;
+    Itm('colorSelectUpdate').value='';
     $("#confederationTeamUpdate").prev().html(t.conf);
+    $("#colorSelectUpdate").prev().html('---');
     Itm('nameUpdate').value=t.name;
     Itm('abreviaturaUpdate').value=t.abre;
     loadParentsUpdate();
@@ -262,9 +265,9 @@ function llenarListaColores(){
     Itm('colorSelectUpdate').innerHTML=html; 
 }
 
-function onchangeColor(id1,id2){
+function onchangeColor(id1,id2,id3){
     var valcolor=ItmV(id1);
-    var itms=Itms('radio-choice-b');
+    var itms=Itms(id3);
     var type;
     for(var i=0;i<itms.length;i++){
         if(itms[i].checked){
